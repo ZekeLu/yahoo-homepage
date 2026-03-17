@@ -1,41 +1,48 @@
-const heroArticle = {
-  title: "Global Leaders Gather for Historic Climate Summit in Geneva",
-  summary:
-    "World leaders from over 190 countries convene in Geneva to negotiate new binding agreements on carbon emissions and renewable energy targets for the next decade.",
-  imageAlt: "Climate summit in Geneva with world leaders",
-  category: "World News",
-};
+'use client';
 
-const sideArticles = [
-  {
-    title: "Tech Giants Report Record Earnings Amid AI Boom",
-    category: "Business",
-  },
-  {
-    title: "Scientists Discover New Species in Deep Ocean Expedition",
-    category: "Science",
-  },
-  {
-    title: "Housing Market Shows Signs of Recovery in Major Cities",
-    category: "Real Estate",
-  },
-  {
-    title: "Olympic Committee Announces New Sports for 2028 Games",
-    category: "Sports",
-  },
-  {
-    title: "Breakthrough in Battery Technology Could Double EV Range",
-    category: "Tech",
-  },
-];
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import ShareButtons from '@/components/ShareButtons';
+import SkeletonCard from '@/components/SkeletonCard';
+import { allArticles } from '@/lib/articles';
+
+const heroArticle = allArticles.find((a) => a.slug === "global-leaders-climate-summit-geneva")!;
+const sideArticles = allArticles.filter(
+  (a) => a.section === "news" && a.slug !== heroArticle.slug
+);
 
 export default function HeroNews() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <section id="news" aria-label="Top stories" className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Top Stories</h2>
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <div className="animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700 h-72 sm:h-96" />
+          </div>
+          <div className="flex flex-col gap-3">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="news" aria-label="Top stories" className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <h2 className="mb-4 text-xl font-bold text-gray-900">Top Stories</h2>
+      <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Top Stories</h2>
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Hero card */}
-        <a href="#" className="lg:col-span-2 block group">
+        <Link href={`/article/${heroArticle.slug}`} className="lg:col-span-2 block group">
           <article className="relative overflow-hidden rounded-lg shadow-md h-72 sm:h-96">
             <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a5e] via-[#2d1b69] to-[#6001D2]" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -46,30 +53,32 @@ export default function HeroNews() {
               <h3 className="text-xl font-bold leading-tight sm:text-2xl lg:text-3xl group-hover:underline">
                 {heroArticle.title}
               </h3>
-              <p className="mt-2 text-sm text-gray-200 line-clamp-2">{heroArticle.summary}</p>
+              <p className="mt-2 text-sm text-gray-200 line-clamp-2">{heroArticle.snippet}</p>
             </div>
           </article>
-        </a>
+        </Link>
 
         {/* Side article list */}
         <div className="flex flex-col gap-3">
           {sideArticles.map((article) => (
-            <article
-              key={article.title}
-              className="flex items-start gap-3 rounded-lg bg-white p-4 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
-            >
-              <div className="h-10 w-10 flex-shrink-0 rounded bg-gray-200 flex items-center justify-center text-lg" aria-hidden="true">
-                📰
-              </div>
-              <div>
-                <span className="text-xs font-semibold uppercase tracking-wide text-yahoo-purple">
-                  {article.category}
-                </span>
-                <h3 className="text-sm font-semibold text-gray-900 leading-snug">
-                  {article.title}
-                </h3>
-              </div>
-            </article>
+            <Link href={`/article/${article.slug}`} key={article.slug} className="group">
+              <article className="flex items-start gap-3 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                <div className="h-10 w-10 flex-shrink-0 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-lg" aria-hidden="true">
+                  📰
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-semibold uppercase tracking-wide text-yahoo-purple">
+                      {article.category}
+                    </span>
+                    <ShareButtons title={article.title} slug={article.slug} />
+                  </div>
+                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white leading-snug group-hover:underline">
+                    {article.title}
+                  </h3>
+                </div>
+              </article>
+            </Link>
           ))}
         </div>
       </div>

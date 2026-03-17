@@ -1,125 +1,159 @@
-interface ColumnData {
-  title: string;
-  icon: string;
-  articles: { title: string; snippet: string }[];
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import ShareButtons from "@/components/ShareButtons";
+import SkeletonCard from "@/components/SkeletonCard";
+import { allArticles } from "@/lib/articles";
+
+interface FilterConfig {
+  section: string;
+  tabs: string[];
 }
 
-const columns: ColumnData[] = [
-  {
-    title: "Finance",
-    icon: "💹",
-    articles: [
-      {
-        title: "S&P 500 Hits All-Time High on Strong Jobs Report",
-        snippet: "Markets rallied after employment numbers exceeded expectations.",
-      },
-      {
-        title: "Federal Reserve Signals Potential Rate Cut in Q3",
-        snippet: "Chair hints at easing monetary policy amid cooling inflation.",
-      },
-      {
-        title: "Bitcoin Surges Past $100K Milestone",
-        snippet: "Cryptocurrency reaches historic levels driven by institutional adoption.",
-      },
-      {
-        title: "Top 5 Stocks to Watch This Week",
-        snippet: "Analysts highlight opportunities in tech and healthcare sectors.",
-      },
-    ],
-  },
-  {
-    title: "Sports",
-    icon: "⚽",
-    articles: [
-      {
-        title: "Lakers Secure Playoff Spot With Dramatic Win",
-        snippet: "LeBron leads late comeback with 38-point performance.",
-      },
-      {
-        title: "World Cup Qualifiers: Upsets and Surprises",
-        snippet: "Several underdogs advance in thrilling qualification matches.",
-      },
-      {
-        title: "Tennis Star Announces Retirement After Grand Slam Win",
-        snippet: "A legendary career ends on the highest possible note.",
-      },
-    ],
-  },
-  {
-    title: "Entertainment",
-    icon: "🎬",
-    articles: [
-      {
-        title: "Oscar Nominations Announced: Surprises and Snubs",
-        snippet: "Indie films dominate this year's nominations list.",
-      },
-      {
-        title: "Streaming Wars: New Platform Launches With Exclusive Content",
-        snippet: "Major studio enters the direct-to-consumer streaming market.",
-      },
-      {
-        title: "Music Festival Lineup Revealed for Summer 2026",
-        snippet: "Headliners include top artists from multiple genres.",
-      },
-      {
-        title: "Bestselling Author Reveals Next Book in Fantasy Series",
-        snippet: "Fans eagerly await the sixth installment of the epic saga.",
-      },
-    ],
-  },
-  {
-    title: "Tech",
-    icon: "💻",
-    articles: [
-      {
-        title: "AI Assistants Transform Everyday Productivity",
-        snippet: "New generation of AI tools reshapes how people work and create.",
-      },
-      {
-        title: "Major Chip Maker Unveils Next-Gen Processors",
-        snippet: "New architecture promises 40% performance gains over predecessor.",
-      },
-      {
-        title: "Cybersecurity Threats Rise as Remote Work Expands",
-        snippet: "Experts urge companies to strengthen digital defenses.",
-      },
-      {
-        title: "Smart Home Tech Gets More Affordable in 2026",
-        snippet: "Budget-friendly devices bring automation to more households.",
-      },
-    ],
-  },
+const filterConfigs: FilterConfig[] = [
+  { section: "Finance", tabs: ["All", "Stocks", "Crypto"] },
+  { section: "Sports", tabs: ["All", "Basketball", "Soccer", "Tennis"] },
+  { section: "Entertainment", tabs: ["All", "Movies", "Streaming", "Music", "Books"] },
+  { section: "Tech", tabs: ["All", "AI", "Hardware", "Security"] },
 ];
 
+const sectionIcons: Record<string, string> = {
+  Finance: "💹",
+  Sports: "⚽",
+  Entertainment: "🎬",
+  Tech: "💻",
+};
+
+const sections = ["Finance", "Sports", "Entertainment", "Tech"];
+
 export default function ContentColumns() {
+  const [loading, setLoading] = useState(true);
+  const [activeFilters, setActiveFilters] = useState<Record<string, string>>({
+    Finance: "All",
+    Sports: "All",
+    Entertainment: "All",
+    Tech: "All",
+  });
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+    Finance: false,
+    Sports: false,
+    Entertainment: false,
+    Tech: false,
+  });
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const getFilteredArticles = (section: string) => {
+    const sectionKey = section.toLowerCase();
+    const sectionArticles = allArticles.filter((a) => a.section === sectionKey);
+    const filter = activeFilters[section];
+    if (filter === "All") return sectionArticles;
+    return sectionArticles.filter((a) => a.subcategory === filter);
+  };
+
+  const getVisibleArticles = (section: string) => {
+    const filtered = getFilteredArticles(section);
+    if (expandedSections[section]) return filtered;
+    return filtered.slice(0, 2);
+  };
+
+  const toggleExpand = (section: string) => {
+    setExpandedSections((prev) => ({ ...prev, [section]: !prev[section] }));
+  };
+
+  if (loading) {
+    return (
+      <section aria-label="Category news" className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {sections.map((section) => (
+            <div key={section}>
+              <div className="mb-3 h-6 w-24 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+              <div className="space-y-3">
+                <SkeletonCard />
+                <SkeletonCard />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section
-      aria-label="Category news"
-      className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8"
-    >
+    <section aria-label="Category news" className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {columns.map((column) => (
-          <div key={column.title} id={column.title.toLowerCase()}>
-            <h2 className="mb-3 flex items-center gap-2 text-lg font-bold text-gray-900">
-              <span aria-hidden="true">{column.icon}</span>
-              {column.title}
-            </h2>
-            <ul className="space-y-3" role="list">
-              {column.articles.map((article) => (
-                <li key={article.title}>
-                  <article className="rounded-lg bg-white p-4 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
-                    <h3 className="text-sm font-semibold text-gray-900">
-                      {article.title}
-                    </h3>
-                    <p className="mt-1 text-xs text-gray-500">
-                      {article.snippet}
-                    </p>
-                  </article>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        {sections.map((section) => {
+          const config = filterConfigs.find((c) => c.section === section);
+          const filtered = getFilteredArticles(section);
+          const visible = getVisibleArticles(section);
+          const isExpanded = expandedSections[section];
+
+          return (
+            <div key={section} id={section.toLowerCase()}>
+              <h2 className="mb-3 flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+                <span aria-hidden="true">{sectionIcons[section]}</span>
+                {section}
+              </h2>
+
+              {/* Filter tabs */}
+              {config && (
+                <div className="mb-3 flex flex-wrap gap-1">
+                  {config.tabs.map((tab) => (
+                    <button
+                      key={tab}
+                      type="button"
+                      onClick={() =>
+                        setActiveFilters((prev) => ({ ...prev, [section]: tab }))
+                      }
+                      className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                        activeFilters[section] === tab
+                          ? "bg-yahoo-purple text-white"
+                          : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                      }`}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <ul className="space-y-3" role="list">
+                {visible.map((article) => (
+                  <li key={article.slug}>
+                    <Link href={`/article/${article.slug}`} className="group block">
+                      <article className="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                        <div className="flex items-center justify-between gap-2">
+                          <h3 className="text-sm font-semibold text-gray-900 dark:text-white group-hover:underline">
+                            {article.title}
+                          </h3>
+                          <ShareButtons title={article.title} slug={article.slug} />
+                        </div>
+                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                          {article.snippet}
+                        </p>
+                      </article>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Load more / Show less */}
+              {filtered.length > 2 && (
+                <button
+                  type="button"
+                  onClick={() => toggleExpand(section)}
+                  className="mt-3 w-full rounded-lg border border-gray-300 dark:border-gray-600 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                >
+                  {isExpanded ? "Show less" : `Load more (${filtered.length - 2})`}
+                </button>
+              )}
+            </div>
+          );
+        })}
       </div>
     </section>
   );

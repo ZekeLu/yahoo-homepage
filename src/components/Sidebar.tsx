@@ -32,21 +32,21 @@ export default function Sidebar() {
   return (
     <aside aria-label="Sidebar" className="space-y-6">
       {/* Weather Widget */}
-      <div className="rounded-lg bg-white p-5 shadow-sm">
-        <h2 className="mb-3 text-lg font-bold text-gray-900">Weather</h2>
+      <div className="rounded-lg bg-white dark:bg-gray-800 p-5 shadow-sm">
+        <h2 className="mb-3 text-lg font-bold text-gray-900 dark:text-white">Weather</h2>
         <div className="flex items-center gap-4">
           <span className="text-4xl" role="img" aria-label="Partly cloudy">
             ⛅
           </span>
           <div>
-            <p className="text-3xl font-bold text-gray-900">72°F</p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">72°F</p>
             {currentDate && (
-              <p className="text-sm text-gray-700">{currentDate}</p>
+              <p className="text-sm text-gray-700 dark:text-gray-300">{currentDate}</p>
             )}
             <p className="text-xs text-gray-400">Partly Cloudy</p>
           </div>
         </div>
-        <div className="mt-3 grid grid-cols-4 gap-2 text-center text-xs text-gray-500">
+        <div className="mt-3 grid grid-cols-4 gap-2 text-center text-xs text-gray-500 dark:text-gray-400">
           <div>
             <p className="font-medium">Mon</p>
             <p>68°</p>
@@ -68,14 +68,14 @@ export default function Sidebar() {
       </div>
 
       {/* Trending Keywords */}
-      <div className="rounded-lg bg-white p-5 shadow-sm">
-        <h2 className="mb-3 text-lg font-bold text-gray-900">Trending</h2>
+      <div className="rounded-lg bg-white dark:bg-gray-800 p-5 shadow-sm">
+        <h2 className="mb-3 text-lg font-bold text-gray-900 dark:text-white">Trending</h2>
         <ul className="space-y-2" role="list">
           {trendingKeywords.map((keyword, index) => (
             <li key={keyword}>
               <a
                 href="#"
-                className="flex items-center gap-2 text-sm text-gray-700 hover:text-yahoo-purple transition-colors"
+                className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 hover:text-yahoo-purple transition-colors"
               >
                 <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded bg-yahoo-purple text-xs font-bold text-white">
                   {index + 1}
@@ -89,7 +89,7 @@ export default function Sidebar() {
 
       {/* Ad Placeholder */}
       <div
-        className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50"
+        className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800"
         role="complementary"
         aria-label="Advertisement"
       >
