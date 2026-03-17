@@ -44,8 +44,12 @@ export default function HeroNews() {
         {/* Hero card */}
         <Link href={`/article/${heroArticle.slug}`} className="lg:col-span-2 block group">
           <article className="relative overflow-hidden rounded-lg shadow-md h-72 sm:h-96">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a5e] via-[#2d1b69] to-[#6001D2]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+            <img
+              src={heroArticle.imageUrl}
+              alt={heroArticle.title}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
             <div className="relative flex h-full flex-col justify-end p-6 text-white">
               <span className="mb-2 inline-block w-fit rounded bg-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide backdrop-blur-sm">
                 {heroArticle.category}

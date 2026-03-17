@@ -125,16 +125,25 @@ export default function ContentColumns() {
                 {visible.map((article) => (
                   <li key={article.slug}>
                     <Link href={`/article/${article.slug}`} className="group block">
-                      <article className="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
-                        <div className="flex items-center justify-between gap-2">
-                          <h3 className="text-sm font-semibold text-gray-900 dark:text-white group-hover:underline">
-                            {article.title}
-                          </h3>
-                          <ShareButtons title={article.title} slug={article.slug} />
+                      <article className="overflow-hidden rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                        <div className="aspect-video overflow-hidden">
+                          <img
+                            src={article.imageUrl}
+                            alt={article.title}
+                            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
                         </div>
-                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                          {article.snippet}
-                        </p>
+                        <div className="p-4">
+                          <div className="flex items-center justify-between gap-2">
+                            <h3 className="text-sm font-semibold text-gray-900 dark:text-white group-hover:underline">
+                              {article.title}
+                            </h3>
+                            <ShareButtons title={article.title} slug={article.slug} />
+                          </div>
+                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                            {article.snippet}
+                          </p>
+                        </div>
                       </article>
                     </Link>
                   </li>
