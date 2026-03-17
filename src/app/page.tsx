@@ -4,6 +4,8 @@ import HeroNews from "@/components/HeroNews";
 import ContentColumns from "@/components/ContentColumns";
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
+import Newsletter from "@/components/Newsletter";
+import BackToTop from "@/components/BackToTop";
 
 export default function Home() {
   return (
@@ -25,9 +27,12 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        <Newsletter />
       </main>
 
       <Footer />
+      <BackToTop />
     </div>
   );
 }
