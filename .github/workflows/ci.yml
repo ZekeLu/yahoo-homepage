@@ -1,0 +1,40 @@
+name: CI — React Loop
+
+on:
+  push:
+    branches: [main, 'feature/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  react-loop:
+    name: Lint → Test → Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # ── LOOP STEP 1: Lint ──────────────────────────────────────────
+      - name: Lint (ESLint)
+        run: npm run lint
+
+      # ── LOOP STEP 2: Test ──────────────────────────────────────────
+      - name: Test (Jest)
+        run: npm test -- --ci --passWithNoTests
+
+      # ── LOOP STEP 3: Build ─────────────────────────────────────────
+      # This catches Next.js errors (e.g. missing 'use client') BEFORE deploy
+      - name: Build (Next.js)
+        run: npm run build
+        env:
+          NODE_ENV: production
