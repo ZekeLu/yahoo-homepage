@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import StockTicker from "@/components/StockTicker";
 import SearchBar from "@/components/SearchBar";
 import HeroNews from "@/components/HeroNews";
 import ContentColumns from "@/components/ContentColumns";
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
+      <StockTicker />
       <SearchBar />
 
       <main className="flex-1">

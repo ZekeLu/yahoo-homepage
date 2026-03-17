@@ -24,11 +24,7 @@ export default function SearchBar() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
-    window.open(
-      `https://search.yahoo.com/search?p=${encodeURIComponent(query.trim())}`,
-      '_blank',
-      'noopener,noreferrer'
-    );
+    window.location.href = `/search?q=${encodeURIComponent(query.trim())}`;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,11 +51,7 @@ export default function SearchBar() {
   const handleSuggestionClick = (suggestion: string) => {
     setQuery(suggestion);
     setShowSuggestions(false);
-    window.open(
-      `https://search.yahoo.com/search?p=${encodeURIComponent(suggestion)}`,
-      '_blank',
-      'noopener,noreferrer'
-    );
+    window.location.href = `/search?q=${encodeURIComponent(suggestion)}`;
   };
 
   useEffect(() => {

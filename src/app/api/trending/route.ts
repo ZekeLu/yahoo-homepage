@@ -1,35 +1,27 @@
-import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-
-const trendingPath = path.join(process.cwd(), "src/data/trending.json");
-
-function getTrending(): string[] {
-  return JSON.parse(fs.readFileSync(trendingPath, "utf8"));
-}
-
-function saveTrending(topics: string[]) {
-  fs.writeFileSync(trendingPath, JSON.stringify(topics, null, 2));
-}
+import { NextResponse } from 'next/server';
+import { readDataFile, writeDataFile } from '@/lib/dataHelpers';
+import trendingDefaults from '@/data/trending.json';
 
 export async function GET() {
   try {
-    const trending = getTrending();
+    const trending = await readDataFile<string[]>('trending.json').catch(
+      () => trendingDefaults as string[]
+    );
     return NextResponse.json(trending);
   } catch {
-    return NextResponse.json({ error: "Failed to read trending" }, { status: 500 });
+    return NextResponse.json(trendingDefaults);
   }
 }
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request: Request) {
   try {
-    const topics = await request.json();
-    if (!Array.isArray(topics)) {
-      return NextResponse.json({ error: "Expected array" }, { status: 400 });
-    }
-    saveTrending(topics);
-    return NextResponse.json(topics);
+    const data = await request.json();
+    await writeDataFile('trending.json', data);
+    return NextResponse.json(data);
   } catch {
-    return NextResponse.json({ error: "Failed to update trending" }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to update trending' },
+      { status: 500 }
+    );
   }
 }

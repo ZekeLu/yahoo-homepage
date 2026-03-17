@@ -1,49 +1,31 @@
-import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-
-const articlesPath = path.join(process.cwd(), "src/data/articles.json");
-
-function getArticles() {
-  return JSON.parse(fs.readFileSync(articlesPath, "utf8"));
-}
-
-function saveArticles(articles: Record<string, unknown>[]) {
-  fs.writeFileSync(articlesPath, JSON.stringify(articles, null, 2));
-}
+import { NextResponse } from 'next/server';
+import { readDataFile, writeDataFile } from '@/lib/dataHelpers';
+import { allArticles, Article } from '@/lib/articles';
 
 export async function GET() {
   try {
-    const articles = getArticles();
+    const articles = await readDataFile<Article[]>('articles.json').catch(
+      () => allArticles
+    );
     return NextResponse.json(articles);
   } catch {
-    return NextResponse.json({ error: "Failed to read articles" }, { status: 500 });
+    return NextResponse.json(allArticles);
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const articles = getArticles();
-    const maxId = articles.reduce((max: number, a: { id: number }) => Math.max(max, a.id), 0);
-    const newArticle = {
-      id: maxId + 1,
-      slug: body.slug || "",
-      title: body.title || "",
-      snippet: body.snippet || "",
-      category: body.category || "",
-      section: body.section || "",
-      subcategory: body.subcategory || "",
-      author: body.author || "",
-      date: body.date || "",
-      body: body.body || [],
-      tags: body.tags || [],
-      isFeatured: body.isFeatured || false,
-    };
+    const newArticle = await request.json();
+    const articles = await readDataFile<Article[]>('articles.json').catch(
+      () => [...allArticles]
+    );
     articles.push(newArticle);
-    saveArticles(articles);
+    await writeDataFile('articles.json', articles);
     return NextResponse.json(newArticle, { status: 201 });
   } catch {
-    return NextResponse.json({ error: "Failed to create article" }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to create article' },
+      { status: 500 }
+    );
   }
 }
