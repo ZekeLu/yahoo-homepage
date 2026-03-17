@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { cmsGetOrSeed, cmsSet } from "@/lib/cmsStorage";
 
 interface Subscriber {
   email: string;
@@ -12,15 +13,15 @@ export default function AdminSubscribersPage() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("/api/subscribers")
-      .then((r) => r.json())
+    cmsGetOrSeed<Subscriber[]>("subscribers", "/api/subscribers")
       .then(setSubscribers)
       .catch(() => {});
   }, []);
 
-  const handleDelete = async (email: string) => {
-    await fetch(`/api/subscribers?email=${encodeURIComponent(email)}`, { method: "DELETE" });
-    setSubscribers((prev) => prev.filter((s) => s.email !== email));
+  const handleDelete = (email: string) => {
+    const updated = subscribers.filter((s) => s.email !== email);
+    setSubscribers(updated);
+    cmsSet("subscribers", updated);
   };
 
   const handleExport = () => {

@@ -5,6 +5,7 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SearchBar from '@/components/SearchBar';
 import { allArticles } from '@/lib/articles';
 
 function SearchResults() {
@@ -79,22 +80,38 @@ function SearchResults() {
   );
 }
 
-export default function SearchPage() {
+function SearchPageContent() {
+  const searchParams = useSearchParams();
+  const currentQuery = searchParams.get('q') || '';
+
   return (
     <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
       <Navbar />
+      <SearchBar initialQuery={currentQuery} />
       <main className="flex-1">
-        <Suspense
-          fallback={
-            <div className="mx-auto max-w-3xl px-4 py-8">
-              <div className="h-8 w-64 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
-            </div>
-          }
-        >
-          <SearchResults />
-        </Suspense>
+        <SearchResults />
       </main>
       <Footer />
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
+          <Navbar />
+          <main className="flex-1">
+            <div className="mx-auto max-w-3xl px-4 py-8">
+              <div className="h-8 w-64 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+            </div>
+          </main>
+          <Footer />
+        </div>
+      }
+    >
+      <SearchPageContent />
+    </Suspense>
   );
 }

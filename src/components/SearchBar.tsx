@@ -14,8 +14,8 @@ function generateSuggestions(query: string): string[] {
   ];
 }
 
-export default function SearchBar() {
-  const [query, setQuery] = useState('');
+export default function SearchBar({ initialQuery = '' }: { initialQuery?: string }) {
+  const [query, setQuery] = useState(initialQuery);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);

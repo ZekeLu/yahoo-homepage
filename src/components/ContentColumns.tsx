@@ -134,11 +134,13 @@ export default function ContentColumns() {
                           />
                         </div>
                         <div className="p-4">
-                          <div className="flex items-center justify-between gap-2">
-                            <h3 className="text-sm font-semibold text-gray-900 dark:text-white group-hover:underline">
+                          <div className="flex items-start justify-between gap-2">
+                            <h3 className="text-sm font-semibold leading-snug text-gray-900 dark:text-white group-hover:underline">
                               {article.title}
                             </h3>
-                            <ShareButtons title={article.title} slug={article.slug} />
+                            <div className="flex-shrink-0">
+                              <ShareButtons title={article.title} slug={article.slug} />
+                            </div>
                           </div>
                           <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                             {article.snippet}

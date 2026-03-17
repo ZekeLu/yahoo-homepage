@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { cmsGetOrSeed } from "@/lib/cmsStorage";
 
 interface Article {
   id: number;
+  slug: string;
   title: string;
   section: string;
   date: string;
@@ -24,14 +26,11 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function loadStats() {
       try {
-        const [articlesRes, trendingRes, subscribersRes] = await Promise.all([
-          fetch("/api/articles"),
-          fetch("/api/trending"),
-          fetch("/api/subscribers"),
+        const [articles, trending, subscribers] = await Promise.all([
+          cmsGetOrSeed<Article[]>("articles", "/api/articles"),
+          cmsGetOrSeed<string[]>("trending", "/api/trending"),
+          cmsGetOrSeed<{ email: string }[]>("subscribers", "/api/subscribers"),
         ]);
-        const articles: Article[] = await articlesRes.json();
-        const trending: string[] = await trendingRes.json();
-        const subscribers: { email: string }[] = await subscribersRes.json();
 
         const bySection: Record<string, number> = {};
         for (const a of articles) {
@@ -75,6 +74,10 @@ export default function AdminDashboard() {
     <div>
       <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
       <p className="mt-1 text-sm text-gray-500">Overview of your Yahoo homepage content</p>
+
+      <div className="mt-4 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800">
+        Changes are saved locally in this browser. In production, connect a database for persistence.
+      </div>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {statCards.map((card) => (

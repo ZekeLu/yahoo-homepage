@@ -22,7 +22,7 @@ describe('Article slug lookup', () => {
   it('every article has an imageUrl field', () => {
     allArticles.forEach((article) => {
       expect(article.imageUrl).toBeTruthy();
-      expect(article.imageUrl).toContain('unsplash.com');
+      expect(article.imageUrl).toContain('picsum.photos');
     });
   });
 
