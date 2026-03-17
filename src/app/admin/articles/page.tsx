@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { cmsGetOrSeed, cmsSet } from "@/lib/cmsStorage";
 
 interface Article {
   id: number;
@@ -18,21 +19,21 @@ export default function AdminArticlesPage() {
   const [search, setSearch] = useState("");
   const [sectionFilter, setSectionFilter] = useState("all");
   const [page, setPage] = useState(1);
-  const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [deleteSlug, setDeleteSlug] = useState<string | null>(null);
   const perPage = 10;
 
   useEffect(() => {
-    fetch("/api/articles")
-      .then((r) => r.json())
+    cmsGetOrSeed<Article[]>("articles", "/api/articles")
       .then(setArticles)
       .catch(() => {});
   }, []);
 
-  const handleDelete = async () => {
-    if (!deleteId) return;
-    await fetch(`/api/articles/${deleteId}`, { method: "DELETE" });
-    setArticles((prev) => prev.filter((a) => a.id !== deleteId));
-    setDeleteId(null);
+  const handleDelete = () => {
+    if (!deleteSlug) return;
+    const updated = articles.filter((a) => a.slug !== deleteSlug);
+    setArticles(updated);
+    cmsSet("articles", updated);
+    setDeleteSlug(null);
   };
 
   const filtered = articles.filter((a) => {
@@ -95,7 +96,7 @@ export default function AdminArticlesPage() {
           </thead>
           <tbody className="divide-y">
             {paginated.map((article) => (
-              <tr key={article.id} className="hover:bg-gray-50">
+              <tr key={article.slug} className="hover:bg-gray-50">
                 <td className="px-4 py-3 font-medium text-gray-900 max-w-xs truncate">
                   {article.title}
                 </td>
@@ -110,14 +111,14 @@ export default function AdminArticlesPage() {
                 <td className="px-4 py-3">
                   <div className="flex gap-2">
                     <Link
-                      href={`/admin/articles/${article.id}/edit`}
+                      href={`/admin/articles/${article.slug}/edit`}
                       className="rounded bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 hover:bg-blue-100"
                     >
                       Edit
                     </Link>
                     <button
                       type="button"
-                      onClick={() => setDeleteId(article.id)}
+                      onClick={() => setDeleteSlug(article.slug)}
                       className="rounded bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 hover:bg-red-100"
                     >
                       Delete
@@ -162,7 +163,7 @@ export default function AdminArticlesPage() {
       )}
 
       {/* Delete confirmation modal */}
-      {deleteId !== null && (
+      {deleteSlug !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
           <div className="w-full max-w-sm rounded-xl bg-white p-6 shadow-xl">
             <h3 className="text-lg font-semibold text-gray-900">Delete Article</h3>
@@ -172,7 +173,7 @@ export default function AdminArticlesPage() {
             <div className="mt-4 flex justify-end gap-3">
               <button
                 type="button"
-                onClick={() => setDeleteId(null)}
+                onClick={() => setDeleteSlug(null)}
                 className="rounded-lg border px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
               >
                 Cancel

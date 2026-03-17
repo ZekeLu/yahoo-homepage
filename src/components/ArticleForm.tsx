@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { cmsGetOrSeed, cmsSet } from "@/lib/cmsStorage";
 
 interface ArticleData {
   id?: number;
@@ -16,6 +17,7 @@ interface ArticleData {
   body: string[];
   tags: string[];
   isFeatured: boolean;
+  imageUrl?: string;
 }
 
 function slugify(text: string): string {
@@ -53,13 +55,15 @@ export default function ArticleForm({ articleId }: { articleId?: string }) {
   useEffect(() => {
     if (isEdit) {
       setLoading(true);
-      fetch(`/api/articles/${articleId}`)
-        .then((r) => r.json())
-        .then((data) => {
-          setForm(data);
-          setBodyText(data.body?.join("\n\n") || "");
-          setTagsText(data.tags?.join(", ") || "");
-          setSlugEdited(true);
+      cmsGetOrSeed<ArticleData[]>("articles", "/api/articles")
+        .then((articles) => {
+          const found = articles.find((a) => a.slug === articleId);
+          if (found) {
+            setForm(found);
+            setBodyText(found.body?.join("\n\n") || "");
+            setTagsText(found.tags?.join(", ") || "");
+            setSlugEdited(true);
+          }
           setLoading(false);
         })
         .catch(() => setLoading(false));
@@ -104,16 +108,20 @@ export default function ArticleForm({ articleId }: { articleId?: string }) {
     };
 
     try {
-      const url = isEdit ? `/api/articles/${articleId}` : "/api/articles";
-      const method = isEdit ? "PUT" : "POST";
-      const res = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (res.ok) {
-        router.push("/admin/articles");
+      const articles = await cmsGetOrSeed<ArticleData[]>("articles", "/api/articles");
+      if (isEdit) {
+        const index = articles.findIndex((a) => a.slug === articleId);
+        if (index !== -1) {
+          articles[index] = { ...articles[index], ...payload };
+        }
+      } else {
+        const maxId = articles.reduce((max, a) => Math.max(max, a.id || 0), 0);
+        payload.id = maxId + 1;
+        payload.imageUrl = `https://picsum.photos/seed/${payload.slug}/800/450`;
+        articles.push(payload as ArticleData);
       }
+      cmsSet("articles", articles);
+      router.push("/admin/articles");
     } catch {
       // handle error silently
     } finally {

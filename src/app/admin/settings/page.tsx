@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { cmsGetOrSeed, cmsSet, cmsGet } from "@/lib/cmsStorage";
 
 interface Article {
   id: number;
@@ -24,8 +25,8 @@ export default function AdminSettingsPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/settings").then((r) => r.json()),
-      fetch("/api/articles").then((r) => r.json()),
+      cmsGetOrSeed<{ siteTitle?: string; siteDescription?: string; heroArticleSlug?: string }>("settings", "/api/settings"),
+      cmsGetOrSeed<Article[]>("articles", "/api/articles"),
     ]).then(([settings, arts]) => {
       setSiteTitle(settings.siteTitle || "");
       setSiteDescription(settings.siteDescription || "");
@@ -34,28 +35,18 @@ export default function AdminSettingsPage() {
     }).catch(() => {});
   }, []);
 
-  const handleSaveSettings = async (e: React.FormEvent) => {
+  const handleSaveSettings = (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
     setMessage("");
-    try {
-      const res = await fetch("/api/settings", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ siteTitle, siteDescription, heroArticleSlug }),
-      });
-      if (res.ok) {
-        setMessage("Settings saved successfully!");
-        setTimeout(() => setMessage(""), 3000);
-      }
-    } catch {
-      setMessage("Failed to save settings");
-    } finally {
-      setSaving(false);
-    }
+    const current = cmsGet<Record<string, unknown>>("settings") || {};
+    cmsSet("settings", { ...current, siteTitle, siteDescription, heroArticleSlug });
+    setMessage("Settings saved successfully!");
+    setSaving(false);
+    setTimeout(() => setMessage(""), 3000);
   };
 
-  const handleChangePassword = async (e: React.FormEvent) => {
+  const handleChangePassword = (e: React.FormEvent) => {
     e.preventDefault();
     setPasswordError("");
     setPasswordMessage("");
@@ -69,28 +60,20 @@ export default function AdminSettingsPage() {
       return;
     }
 
-    setSavingPassword(true);
-    try {
-      const res = await fetch("/api/settings", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ currentPassword, newPassword }),
-      });
-      if (res.ok) {
-        setPasswordMessage("Password changed successfully!");
-        setCurrentPassword("");
-        setNewPassword("");
-        setConfirmPassword("");
-        setTimeout(() => setPasswordMessage(""), 3000);
-      } else {
-        const data = await res.json();
-        setPasswordError(data.error || "Failed to change password");
-      }
-    } catch {
-      setPasswordError("Something went wrong");
-    } finally {
-      setSavingPassword(false);
+    const storedPassword = cmsGet<string>("adminPassword") || "admin123";
+    if (currentPassword !== storedPassword) {
+      setPasswordError("Current password is incorrect");
+      return;
     }
+
+    setSavingPassword(true);
+    cmsSet("adminPassword", newPassword);
+    setPasswordMessage("Password changed successfully!");
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    setSavingPassword(false);
+    setTimeout(() => setPasswordMessage(""), 3000);
   };
 
   return (

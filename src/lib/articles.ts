@@ -21,7 +21,7 @@ export const allArticles: Article[] = [
     section: "news",
     author: "Sarah Mitchell",
     date: "March 17, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/global-leaders-climate-summit-geneva/800/450",
     body: [
       "In what is being hailed as the most significant environmental gathering in decades, world leaders from over 190 countries have converged on Geneva for a historic climate summit. The week-long event aims to establish new binding agreements on carbon emissions and renewable energy targets that will shape environmental policy for the next decade.",
       "The summit comes at a critical juncture, as recent scientific reports indicate that global temperatures are on track to exceed the 1.5\u00b0C threshold set by the Paris Agreement. Delegates are expected to negotiate ambitious targets for reducing greenhouse gas emissions by 2035, with a particular focus on transitioning away from fossil fuels.",
@@ -38,7 +38,7 @@ export const allArticles: Article[] = [
     section: "news",
     author: "James Chen",
     date: "March 16, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/tech-giants-record-earnings-ai-boom/800/450",
     body: [
       "The world's largest technology companies have reported record-breaking earnings for the latest quarter, with artificial intelligence emerging as the primary growth driver across the sector. Combined revenues from the top five tech firms exceeded $500 billion, marking an unprecedented milestone.",
       "Cloud computing divisions saw the strongest growth, with enterprise AI services contributing significantly to revenue streams. Companies reported that demand for AI infrastructure, including specialized chips and data center capacity, continues to outpace supply.",
@@ -55,7 +55,7 @@ export const allArticles: Article[] = [
     section: "news",
     author: "Dr. Elena Rodriguez",
     date: "March 15, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/scientists-new-species-deep-ocean/800/450",
     body: [
       "Marine biologists have announced the discovery of 47 previously unknown species during a deep-sea expedition in the Pacific Ocean. The findings, published in the journal Nature, represent one of the largest single discoveries of new marine life in recent history.",
       "The expedition utilized advanced submersible technology to explore depths exceeding 6,000 meters, areas that have remained largely inaccessible to scientific study. Among the discoveries are several bioluminescent organisms and a new genus of deep-sea coral.",
@@ -72,7 +72,7 @@ export const allArticles: Article[] = [
     section: "news",
     author: "Michael Torres",
     date: "March 14, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/housing-market-recovery-major-cities/800/450",
     body: [
       "The housing market is showing clear signs of recovery across major metropolitan areas, with home sales rising for the third consecutive month and median prices stabilizing after a prolonged period of decline.",
       "Lower mortgage rates, which have fallen to their lowest levels in two years, are being credited as the primary catalyst for renewed buyer activity. First-time homebuyers, in particular, are returning to the market in significant numbers.",
@@ -89,7 +89,7 @@ export const allArticles: Article[] = [
     section: "news",
     author: "David Park",
     date: "March 13, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1461896836934-bd45ba8c9e57?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/olympic-committee-new-sports-2028/800/450",
     body: [
       "The International Olympic Committee has officially announced the addition of five new sports to the 2028 Los Angeles Olympic Games program, reflecting the evolving landscape of global athletics and youth engagement.",
       "Among the new additions are flag football, squash, and cricket, all of which have massive global followings but have been absent from the Olympic program. The decisions were made following extensive consultations with international sports federations.",
@@ -106,7 +106,7 @@ export const allArticles: Article[] = [
     section: "news",
     author: "Lisa Wang",
     date: "March 12, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/battery-technology-double-ev-range/800/450",
     body: [
       "Researchers at a leading energy technology company have unveiled a breakthrough solid-state battery design that could effectively double the range of electric vehicles while significantly reducing charging times.",
       "The new battery chemistry utilizes a novel solid electrolyte material that allows for higher energy density while maintaining safety standards. Early prototypes have demonstrated energy densities exceeding 500 Wh/kg, compared to approximately 250 Wh/kg for current lithium-ion batteries.",
@@ -123,7 +123,7 @@ export const allArticles: Article[] = [
     subcategory: "Stocks",
     author: "Robert Kim",
     date: "March 17, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/sp-500-all-time-high-jobs-report/800/450",
     body: [
       "The S&P 500 index surged to a new all-time high following the release of a surprisingly strong jobs report that exceeded economist expectations across all major metrics.",
       "The economy added 312,000 jobs in the latest month, well above the consensus forecast of 225,000. The unemployment rate fell to 3.4%, its lowest level in over five decades.",
@@ -141,7 +141,7 @@ export const allArticles: Article[] = [
     subcategory: "Stocks",
     author: "Amanda Foster",
     date: "March 16, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/federal-reserve-rate-cut-q3/800/450",
     body: [
       "Federal Reserve Chair has signaled that the central bank may begin cutting interest rates as early as the third quarter, citing sustained progress in bringing inflation back toward the 2% target.",
       "In testimony before Congress, the Chair noted that the labor market remains healthy while price pressures have moderated significantly from their peak levels.",
@@ -159,7 +159,7 @@ export const allArticles: Article[] = [
     subcategory: "Crypto",
     author: "Nathan Brooks",
     date: "March 15, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/bitcoin-surges-past-100k/800/450",
     body: [
       "Bitcoin has broken through the $100,000 barrier for the first time in its history, marking a watershed moment for the cryptocurrency market and digital assets broadly.",
       "The milestone was driven primarily by continued institutional adoption, with several major pension funds and sovereign wealth funds adding Bitcoin to their portfolios in recent months.",
@@ -177,7 +177,7 @@ export const allArticles: Article[] = [
     subcategory: "Stocks",
     author: "Patricia Wells",
     date: "March 14, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/top-5-stocks-to-watch/800/450",
     body: [
       "Wall Street analysts have identified five stocks that could see significant movement this week, based on upcoming earnings reports, regulatory decisions, and sector trends.",
       "Technology stocks continue to dominate the watch lists, with two major semiconductor companies expected to report quarterly results. Healthcare stocks are also in focus ahead of key FDA decisions.",
@@ -194,7 +194,7 @@ export const allArticles: Article[] = [
     subcategory: "Basketball",
     author: "Marcus Johnson",
     date: "March 17, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/lakers-secure-playoff-spot/800/450",
     body: [
       "The Los Angeles Lakers clinched a playoff berth with a thrilling come-from-behind victory, powered by a masterful 38-point performance from LeBron James that reminded fans why he remains one of basketball's greatest competitors.",
       "Trailing by 15 points entering the fourth quarter, James orchestrated a stunning rally that included four consecutive three-pointers and a coast-to-coast drive for the go-ahead basket with 12 seconds remaining.",
@@ -212,7 +212,7 @@ export const allArticles: Article[] = [
     subcategory: "Soccer",
     author: "Carlos Mendez",
     date: "March 16, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/world-cup-qualifiers-upsets/800/450",
     body: [
       "The latest round of World Cup qualification matches delivered a series of stunning upsets that have reshaped the landscape of international football and left several traditional powerhouses fighting for their tournament lives.",
       "Among the biggest surprises was a historic victory by an underdog nation over a perennial favorite, ending a decades-long unbeaten qualifying record. The result sent shockwaves through the sport.",
@@ -229,7 +229,7 @@ export const allArticles: Article[] = [
     subcategory: "Tennis",
     author: "Sophie Martin",
     date: "March 15, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/tennis-star-retirement-grand-slam/800/450",
     body: [
       "In one of the most poignant moments in tennis history, a legendary champion announced their retirement immediately after winning their 25th Grand Slam title, ending an unparalleled career at the absolute pinnacle of the sport.",
       "The emotional post-match ceremony drew tributes from fellow players, former champions, and fans who had watched the champion's career unfold over two remarkable decades.",
@@ -246,7 +246,7 @@ export const allArticles: Article[] = [
     subcategory: "Movies",
     author: "Rachel Green",
     date: "March 17, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/oscar-nominations-surprises-snubs/800/450",
     body: [
       "The Academy of Motion Picture Arts and Sciences has unveiled the nominations for the 98th Academy Awards, with independent films earning a surprising number of nods in major categories.",
       "The nominations reflect a shifting landscape in Hollywood, where streaming platforms and independent studios are increasingly competing with traditional major studios for awards recognition.",
@@ -264,7 +264,7 @@ export const allArticles: Article[] = [
     subcategory: "Streaming",
     author: "Kevin Park",
     date: "March 16, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/streaming-wars-new-platform/800/450",
     body: [
       "A major entertainment conglomerate has officially launched its long-anticipated streaming platform, entering an increasingly crowded market with an ambitious slate of exclusive original content.",
       "The platform debuts with a library of over 15,000 titles, including several high-budget original series and films that have generated significant buzz in the entertainment press.",
@@ -281,7 +281,7 @@ export const allArticles: Article[] = [
     subcategory: "Music",
     author: "Jade Williams",
     date: "March 15, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/music-festival-lineup-summer-2026/800/450",
     body: [
       "Organizers have announced the full lineup for one of the summer's most anticipated music festivals, featuring an eclectic mix of headliners spanning pop, rock, hip-hop, and electronic music.",
       "The festival, which takes place over three days in August, will feature over 150 acts across eight stages, making it one of the largest music events in the country.",
@@ -299,7 +299,7 @@ export const allArticles: Article[] = [
     subcategory: "Books",
     author: "Thomas Reed",
     date: "March 14, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/bestselling-author-fantasy-series/800/450",
     body: [
       "The author behind one of the bestselling fantasy series of the decade has officially announced the release date for the highly anticipated sixth installment, ending years of speculation among devoted fans.",
       "The new book, which promises to be the longest in the series at over 800 pages, will resolve several major plot threads while introducing new characters and storylines.",
@@ -317,7 +317,7 @@ export const allArticles: Article[] = [
     subcategory: "AI",
     author: "Diana Chen",
     date: "March 17, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/ai-assistants-everyday-productivity/800/450",
     body: [
       "A new generation of AI-powered productivity assistants is fundamentally changing how people approach their daily work, from drafting emails and creating presentations to analyzing complex datasets and generating creative content.",
       "Recent surveys indicate that over 60% of knowledge workers now use AI tools regularly in their professional lives, a dramatic increase from just 15% two years ago.",
@@ -335,7 +335,7 @@ export const allArticles: Article[] = [
     subcategory: "Hardware",
     author: "Brian Lee",
     date: "March 16, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/chip-maker-next-gen-processors/800/450",
     body: [
       "A leading semiconductor manufacturer has unveiled its next-generation processor architecture, promising a 40% improvement in performance and 25% reduction in power consumption compared to its predecessor.",
       "The new chips, built on a cutting-edge 2nm process node, incorporate advanced AI acceleration capabilities alongside traditional CPU and GPU performance enhancements.",
@@ -353,7 +353,7 @@ export const allArticles: Article[] = [
     subcategory: "Security",
     author: "Alex Turner",
     date: "March 15, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/cybersecurity-threats-remote-work/800/450",
     body: [
       "Cybersecurity experts are sounding the alarm about a significant increase in sophisticated cyberattacks targeting organizations with distributed workforces, as remote and hybrid work arrangements continue to expand globally.",
       "The latest industry report reveals that ransomware attacks have increased by 67% over the past year, with small and medium businesses being disproportionately affected due to limited security resources.",
@@ -371,7 +371,7 @@ export const allArticles: Article[] = [
     subcategory: "Hardware",
     author: "Maria Santos",
     date: "March 14, 2026",
-    imageUrl: "https://images.unsplash.com/photo-1558002038-1055907df827?w=800&h=450&fit=crop",
+    imageUrl: "https://picsum.photos/seed/smart-home-tech-affordable-2026/800/450",
     body: [
       "The smart home technology market is experiencing a significant shift toward affordability, with several major manufacturers introducing budget-friendly product lines that make home automation accessible to a broader consumer base.",
       "Average prices for smart home devices have dropped by approximately 35% over the past two years, driven by increased competition, improved manufacturing processes, and economies of scale.",

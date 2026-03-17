@@ -10,12 +10,13 @@
     "date": "March 17, 2026",
     "body": [
       "In what is being hailed as the most significant environmental gathering in decades, world leaders from over 190 countries have converged on Geneva for a historic climate summit. The week-long event aims to establish new binding agreements on carbon emissions and renewable energy targets that will shape environmental policy for the next decade.",
-      "The summit comes at a critical juncture, as recent scientific reports indicate that global temperatures are on track to exceed the 1.5°C threshold set by the Paris Agreement. Delegates are expected to negotiate ambitious targets for reducing greenhouse gas emissions by 2035, with a particular focus on transitioning away from fossil fuels.",
+      "The summit comes at a critical juncture, as recent scientific reports indicate that global temperatures are on track to exceed the 1.5\u00b0C threshold set by the Paris Agreement. Delegates are expected to negotiate ambitious targets for reducing greenhouse gas emissions by 2035, with a particular focus on transitioning away from fossil fuels.",
       "Key topics on the agenda include carbon pricing mechanisms, climate finance for developing nations, and the establishment of a global renewable energy standard. Several major economies have already signaled their willingness to commit to net-zero emissions by 2040, a decade earlier than previous pledges.",
       "Environmental advocacy groups have organized parallel events throughout the city, calling for even more aggressive action. Meanwhile, industry representatives are pushing for a balanced approach that considers economic impacts alongside environmental goals."
     ],
     "tags": [],
-    "isFeatured": true
+    "isFeatured": true,
+    "imageUrl": "https://picsum.photos/seed/global-leaders-climate-summit-geneva/800/450"
   },
   {
     "id": 2,
@@ -33,7 +34,8 @@
       "However, some market observers have raised concerns about the sustainability of current growth rates, drawing parallels to previous technology bubbles. Companies have pushed back on such comparisons, pointing to concrete revenue generation rather than speculative valuations."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/tech-giants-record-earnings-ai-boom/800/450"
   },
   {
     "id": 3,
@@ -51,7 +53,8 @@
       "The team plans to return for a follow-up expedition later this year, equipped with enhanced sampling technology to study the genetic makeup of the newly discovered species in greater detail."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/scientists-new-species-deep-ocean/800/450"
   },
   {
     "id": 4,
@@ -69,7 +72,8 @@
       "Despite the positive trends, affordability remains a significant concern in many high-cost markets. Policymakers continue to explore solutions including zoning reforms, incentive programs, and public-private partnerships to increase the supply of affordable housing."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/housing-market-recovery-major-cities/800/450"
   },
   {
     "id": 5,
@@ -87,7 +91,8 @@
       "Athletes and fans worldwide have welcomed the announcements, with national federations beginning to establish qualification pathways and training programs for the 2028 Games."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/olympic-committee-new-sports-2028/800/450"
   },
   {
     "id": 6,
@@ -105,7 +110,8 @@
       "The company expects to begin pilot production within 18 months, with commercial availability projected for 2028. Industry analysts estimate the technology could reduce the cost of EV battery packs by up to 30 percent."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/battery-technology-double-ev-range/800/450"
   },
   {
     "id": 7,
@@ -124,7 +130,8 @@
       "All eleven S&P 500 sectors finished in positive territory, with technology and consumer discretionary leading the gains. Trading volume was significantly above average."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/sp-500-all-time-high-jobs-report/800/450"
   },
   {
     "id": 8,
@@ -143,7 +150,8 @@
       "Economists cautioned that the timeline remains data-dependent and could shift if inflation readings unexpectedly accelerate or if global economic conditions deteriorate."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/federal-reserve-rate-cut-q3/800/450"
   },
   {
     "id": 9,
@@ -162,7 +170,8 @@
       "Critics continue to warn about the volatility inherent in cryptocurrency markets, while proponents argue that Bitcoin's fixed supply and growing institutional acceptance support its long-term value proposition."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/bitcoin-surges-past-100k/800/450"
   },
   {
     "id": 10,
@@ -181,7 +190,8 @@
       "Risk factors to monitor include ongoing trade tensions, currency fluctuations, and any unexpected shifts in Federal Reserve policy expectations."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/top-5-stocks-to-watch/800/450"
   },
   {
     "id": 11,
@@ -200,7 +210,8 @@
       "Head coach emphasized that the team's depth and defensive improvements have been key factors in their turnaround. The Lakers will face a tough first-round matchup against the conference's second seed."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/lakers-secure-playoff-spot/800/450"
   },
   {
     "id": 12,
@@ -219,7 +230,8 @@
       "FIFA officials noted that the increased competitiveness of qualifying reflects the globalization of football talent and improved coaching standards across confederations."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/world-cup-qualifiers-upsets/800/450"
   },
   {
     "id": 13,
@@ -238,7 +250,8 @@
       "The retiring champion spoke about future plans, which include establishing a tennis academy for underprivileged youth and serving as an ambassador for the sport globally."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/tennis-star-retirement-grand-slam/800/450"
   },
   {
     "id": 14,
@@ -257,7 +270,8 @@
       "The ceremony is scheduled for late March, with host duties being handled by a popular comedian making their Oscar hosting debut."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/oscar-nominations-surprises-snubs/800/450"
   },
   {
     "id": 15,
@@ -276,7 +290,8 @@
       "The company is betting on its deep content library and exclusive franchises to differentiate itself, while also offering a competitive price point to attract subscribers."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/streaming-wars-new-platform/800/450"
   },
   {
     "id": 16,
@@ -295,7 +310,8 @@
       "The festival has also announced expanded sustainability initiatives, including carbon-neutral operations and a ban on single-use plastics throughout the venue."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/music-festival-lineup-summer-2026/800/450"
   },
   {
     "id": 17,
@@ -314,7 +330,8 @@
       "The author revealed in an exclusive interview that two more books are planned to complete the series, with the final installment expected by 2029."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/bestselling-author-fantasy-series/800/450"
   },
   {
     "id": 18,
@@ -333,7 +350,8 @@
       "Privacy and data security remain top concerns, with companies implementing strict policies around the use of AI tools with sensitive corporate information."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/ai-assistants-everyday-productivity/800/450"
   },
   {
     "id": 19,
@@ -352,7 +370,8 @@
       "Mass production is expected to begin in the second half of the year, with the first consumer devices featuring the new chips arriving by the holiday season."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/chip-maker-next-gen-processors/800/450"
   },
   {
     "id": 20,
@@ -371,7 +390,8 @@
       "Security professionals recommend that organizations implement zero-trust architecture, regular security audits, and comprehensive employee training programs to mitigate the evolving threat landscape."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/cybersecurity-threats-remote-work/800/450"
   },
   {
     "id": 21,
@@ -390,6 +410,7 @@
       "Industry analysts predict that over 50% of households in developed markets will have at least one smart home device by the end of 2026, up from an estimated 38% at the start of the year."
     ],
     "tags": [],
-    "isFeatured": false
+    "isFeatured": false,
+    "imageUrl": "https://picsum.photos/seed/smart-home-tech-affordable-2026/800/450"
   }
 ]
