@@ -67,6 +67,28 @@ const columns: ColumnData[] = [
       },
     ],
   },
+  {
+    title: "Tech",
+    icon: "💻",
+    articles: [
+      {
+        title: "AI Assistants Transform Everyday Productivity",
+        snippet: "New generation of AI tools reshapes how people work and create.",
+      },
+      {
+        title: "Major Chip Maker Unveils Next-Gen Processors",
+        snippet: "New architecture promises 40% performance gains over predecessor.",
+      },
+      {
+        title: "Cybersecurity Threats Rise as Remote Work Expands",
+        snippet: "Experts urge companies to strengthen digital defenses.",
+      },
+      {
+        title: "Smart Home Tech Gets More Affordable in 2026",
+        snippet: "Budget-friendly devices bring automation to more households.",
+      },
+    ],
+  },
 ];
 
 export default function ContentColumns() {
@@ -75,7 +97,7 @@ export default function ContentColumns() {
       aria-label="Category news"
       className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8"
     >
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {columns.map((column) => (
           <div key={column.title} id={column.title.toLowerCase()}>
             <h2 className="mb-3 flex items-center gap-2 text-lg font-bold text-gray-900">
@@ -85,7 +107,7 @@ export default function ContentColumns() {
             <ul className="space-y-3" role="list">
               {column.articles.map((article) => (
                 <li key={article.title}>
-                  <article className="rounded-lg bg-white p-4 shadow-sm hover:shadow-md transition-shadow">
+                  <article className="rounded-lg bg-white p-4 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
                     <h3 className="text-sm font-semibold text-gray-900">
                       {article.title}
                     </h3>

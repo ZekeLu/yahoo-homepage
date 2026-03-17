@@ -1,3 +1,7 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+
 const trendingKeywords = [
   "Climate Summit",
   "AI Regulation",
@@ -9,7 +13,22 @@ const trendingKeywords = [
   "Cryptocurrency",
 ];
 
+function formatCurrentDate(): string {
+  const now = new Date();
+  return now.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
 export default function Sidebar() {
+  const [currentDate, setCurrentDate] = useState('');
+
+  useEffect(() => {
+    setCurrentDate(formatCurrentDate());
+  }, []);
+
   return (
     <aside aria-label="Sidebar" className="space-y-6">
       {/* Weather Widget */}
@@ -21,7 +40,9 @@ export default function Sidebar() {
           </span>
           <div>
             <p className="text-3xl font-bold text-gray-900">72°F</p>
-            <p className="text-sm text-gray-500">San Francisco, CA</p>
+            {currentDate && (
+              <p className="text-sm text-gray-700">{currentDate}</p>
+            )}
             <p className="text-xs text-gray-400">Partly Cloudy</p>
           </div>
         </div>
@@ -43,6 +64,7 @@ export default function Sidebar() {
             <p>70°</p>
           </div>
         </div>
+        <p className="mt-3 text-xs text-gray-400 italic">Weather data is illustrative</p>
       </div>
 
       {/* Trending Keywords */}

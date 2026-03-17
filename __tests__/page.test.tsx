@@ -7,11 +7,11 @@ describe("Homepage", () => {
 
     const nav = screen.getByRole("navigation", { name: "Main navigation" });
     expect(screen.getByText("Yahoo!")).toBeInTheDocument();
-    expect(within(nav).getByText("News")).toBeInTheDocument();
-    expect(within(nav).getByText("Finance")).toBeInTheDocument();
-    expect(within(nav).getByText("Sports")).toBeInTheDocument();
-    expect(within(nav).getByText("Entertainment")).toBeInTheDocument();
-    expect(within(nav).getByText("Tech")).toBeInTheDocument();
+    expect(within(nav).getAllByText("News").length).toBeGreaterThanOrEqual(1);
+    expect(within(nav).getAllByText("Finance").length).toBeGreaterThanOrEqual(1);
+    expect(within(nav).getAllByText("Sports").length).toBeGreaterThanOrEqual(1);
+    expect(within(nav).getAllByText("Entertainment").length).toBeGreaterThanOrEqual(1);
+    expect(within(nav).getAllByText("Tech").length).toBeGreaterThanOrEqual(1);
   });
 
   it("renders the search bar", () => {

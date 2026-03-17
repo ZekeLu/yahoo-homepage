@@ -31,6 +31,13 @@ export default function Navbar() {
               <li key={link.label}>
                 <a
                   href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.href);
+                    if (target) {
+                      target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
                   className="text-sm font-medium hover:text-purple-200 transition-colors"
                 >
                   {link.label}
@@ -84,22 +91,33 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      {menuOpen && (
-        <div id="mobile-menu" className="md:hidden">
-          <ul className="space-y-1 px-4 pb-3 pt-2" role="list">
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  className="block rounded-md px-3 py-2 text-base font-medium hover:bg-yahoo-purple-dark transition-colors"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <div
+        id="mobile-menu"
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <ul className="space-y-1 px-4 pb-3 pt-2" role="list">
+          {navLinks.map((link) => (
+            <li key={link.label}>
+              <a
+                href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.querySelector(link.href);
+                  if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                  }
+                  setMenuOpen(false);
+                }}
+                className="block rounded-md px-3 py-2 text-base font-medium hover:bg-yahoo-purple-dark transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 }
