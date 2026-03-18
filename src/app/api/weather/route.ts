@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import * as Sentry from '@sentry/nextjs';
+import { withRateLimit } from '@/lib/apiRateLimit';
 
 function weatherCodeToDescription(code: number): string {
   if (code === 0) return 'Clear sky';
@@ -18,7 +20,10 @@ function celsiusToFahrenheit(c: number): number {
   return Math.round(c * 9 / 5 + 32);
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const rateLimited = await withRateLimit(request);
+  if (rateLimited) return rateLimited;
+
   try {
     const url =
       'https://api.open-meteo.com/v1/forecast?latitude=25.01&longitude=121.46&current=temperature_2m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Asia%2FTaipei&forecast_days=4';
@@ -47,7 +52,8 @@ export async function GET() {
     });
 
     return NextResponse.json({ current, forecast });
-  } catch {
+  } catch (error) {
+    Sentry.captureException(error);
     return NextResponse.json(
       { error: 'Failed to fetch weather data' },
       { status: 500 }
