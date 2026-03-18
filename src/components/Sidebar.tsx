@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-const trendingKeywords = [
+const defaultTrendingKeywords = [
   "Climate Summit",
   "AI Regulation",
   "Stock Market",
@@ -22,7 +22,11 @@ function formatCurrentDate(): string {
   });
 }
 
-export default function Sidebar() {
+interface SidebarProps {
+  trending?: string[];
+}
+
+export default function Sidebar({ trending }: SidebarProps) {
   const [currentDate, setCurrentDate] = useState('');
 
   useEffect(() => {
@@ -71,7 +75,7 @@ export default function Sidebar() {
       <div className="rounded-lg bg-white dark:bg-gray-800 p-5 shadow-sm">
         <h2 className="mb-3 text-lg font-bold text-gray-900 dark:text-white">Trending</h2>
         <ul className="space-y-2" role="list">
-          {trendingKeywords.map((keyword, index) => (
+          {(trending ?? defaultTrendingKeywords).map((keyword, index) => (
             <li key={keyword}>
               <a
                 href="#"

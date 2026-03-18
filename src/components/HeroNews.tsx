@@ -4,22 +4,31 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ShareButtons from '@/components/ShareButtons';
 import SkeletonCard from '@/components/SkeletonCard';
-import { allArticles } from '@/lib/articles';
+import { allArticles as bundledArticles, type Article } from '@/lib/articles';
 
-const heroArticle = allArticles.find((a) => a.slug === "global-leaders-climate-summit-geneva")!;
-const sideArticles = allArticles.filter(
-  (a) => a.section === "news" && a.slug !== heroArticle.slug
-);
+interface HeroNewsProps {
+  articles?: Article[];
+  loading?: boolean;
+}
 
-export default function HeroNews() {
-  const [loading, setLoading] = useState(true);
+export default function HeroNews({ articles, loading: externalLoading }: HeroNewsProps) {
+  const [internalLoading, setInternalLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1000);
+    const timer = setTimeout(() => setInternalLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) {
+  const isLoading = externalLoading ?? internalLoading;
+  const sourceArticles = articles ?? bundledArticles;
+  const heroArticle = sourceArticles.find((a) => a.slug === "global-leaders-climate-summit-geneva")
+    ?? sourceArticles.find((a) => a.section === "news")
+    ?? sourceArticles[0];
+  const sideArticles = heroArticle
+    ? sourceArticles.filter((a) => a.section === "news" && a.slug !== heroArticle.slug)
+    : [];
+
+  if (isLoading) {
     return (
       <section id="news" aria-label="Top stories" className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Top Stories</h2>

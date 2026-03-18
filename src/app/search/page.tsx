@@ -6,19 +6,21 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SearchBar from '@/components/SearchBar';
-import { allArticles } from '@/lib/articles';
+import { type Article } from '@/lib/articles';
+import { useCmsArticles } from '@/hooks/useCmsData';
 
 function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
+  const { articles } = useCmsArticles();
 
   const results = query.trim()
-    ? allArticles.filter((article) => {
+    ? articles.filter((article: Article) => {
         const q = query.toLowerCase();
         return (
           article.title.toLowerCase().includes(q) ||
           article.snippet.toLowerCase().includes(q) ||
-          article.body.some((p) => p.toLowerCase().includes(q))
+          article.body.some((p: string) => p.toLowerCase().includes(q))
         );
       })
     : [];
