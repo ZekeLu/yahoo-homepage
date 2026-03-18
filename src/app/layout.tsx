@@ -3,9 +3,21 @@ import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
-  title: "Yahoo! Portal — Demo Homepage",
+  title: "Yahoo! Portal — News, Finance, Sports & Entertainment",
   description:
-    "A Yahoo-style responsive portal homepage built with Next.js and Tailwind CSS.",
+    "Your daily portal for top stories, financial news, sports updates and entertainment.",
+  openGraph: {
+    title: "Yahoo! Portal — News, Finance, Sports & Entertainment",
+    description: "Your daily portal for top stories, financial news, sports updates and entertainment.",
+    url: "https://yahoo-homepage.vercel.app",
+    siteName: "Yahoo! Portal",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Yahoo! Portal — News, Finance, Sports & Entertainment",
+    description: "Your daily portal for top stories, financial news, sports updates and entertainment.",
+  },
 };
 
 export default function RootLayout({

@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 interface Stock {
   symbol: string;
   price: number;
@@ -7,7 +9,7 @@ interface Stock {
   changePercent: number;
 }
 
-const stocks: Stock[] = [
+const fallbackStocks: Stock[] = [
   { symbol: "AAPL", price: 198.45, change: 3.21, changePercent: 1.64 },
   { symbol: "GOOGL", price: 175.82, change: -1.45, changePercent: -0.82 },
   { symbol: "MSFT", price: 442.31, change: 5.67, changePercent: 1.30 },
@@ -38,6 +40,21 @@ function TickerItem({ stock }: { stock: Stock }) {
 }
 
 export default function StockTicker() {
+  const [stocks, setStocks] = useState<Stock[]>(fallbackStocks);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/stocks')
+      .then((res) => (res.ok ? res.json() : Promise.reject()))
+      .then((data: Stock[]) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setStocks(data);
+        }
+      })
+      .catch(() => { /* keep fallback */ })
+      .finally(() => setLoading(false));
+  }, []);
+
   const tickerContent = (
     <>
       {stocks.map((stock) => (
@@ -48,7 +65,7 @@ export default function StockTicker() {
 
   return (
     <div
-      className="overflow-hidden bg-gray-900 py-2 text-sm"
+      className={`overflow-hidden bg-gray-900 py-2 text-sm transition-opacity ${loading ? 'opacity-60' : 'opacity-100'}`}
       aria-label="Stock ticker"
       role="marquee"
     >
