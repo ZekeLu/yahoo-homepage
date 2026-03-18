@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const defaultTrendingKeywords = [
   "Climate Summit",
@@ -145,9 +146,11 @@ export default function Sidebar({ trending }: SidebarProps) {
       >
         <p className="px-3 pt-2 text-xs text-gray-400">Sponsored</p>
         <div className="relative mx-auto h-[250px] w-[300px]">
-          <img
+          <Image
             src="https://picsum.photos/300/250?grayscale"
             alt="Advertisement placeholder"
+            width={300}
+            height={250}
             className="h-full w-full object-cover opacity-60"
           />
         </div>

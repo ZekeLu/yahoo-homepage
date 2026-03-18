@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import ShareButtons from "@/components/ShareButtons";
 import SkeletonCard from "@/components/SkeletonCard";
 import { allArticles as bundledArticles, type Article } from "@/lib/articles";
@@ -134,11 +135,13 @@ export default function ContentColumns({ articles, loading: externalLoading }: C
                   <li key={article.slug}>
                     <Link href={`/article/${article.slug}`} className="group block">
                       <article className="overflow-hidden rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
-                        <div className="aspect-video overflow-hidden">
-                          <img
+                        <div className="relative aspect-video overflow-hidden">
+                          <Image
                             src={article.imageUrl}
                             alt={article.title}
-                            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
                           />
                         </div>
                         <div className="p-4">

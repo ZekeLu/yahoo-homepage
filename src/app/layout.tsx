@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
+import { WebVitals } from "@/components/WebVitals";
 
 export const metadata: Metadata = {
   title: "Yahoo! Portal — News, Finance, Sports & Entertainment",
@@ -27,8 +28,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://finnhub.io" />
+        <link rel="dns-prefetch" href="https://finnhub.io" />
+        <link rel="preconnect" href="https://picsum.photos" />
+        <link rel="dns-prefetch" href="https://picsum.photos" />
+        <link rel="preconnect" href="https://api.open-meteo.com" />
+        <link rel="dns-prefetch" href="https://api.open-meteo.com" />
+      </head>
       <body className="antialiased">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <WebVitals />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SearchBar from '@/components/SearchBar';
@@ -53,11 +54,13 @@ function SearchResults() {
             className="group block rounded-lg bg-white p-4 shadow-sm transition-shadow hover:shadow-md dark:bg-gray-800"
           >
             <div className="flex gap-4">
-              <div className="hidden aspect-video w-40 flex-shrink-0 overflow-hidden rounded sm:block">
-                <img
+              <div className="relative hidden aspect-video w-40 flex-shrink-0 overflow-hidden rounded sm:block">
+                <Image
                   src={article.imageUrl}
                   alt={article.title}
-                  className="h-full w-full object-cover"
+                  fill
+                  sizes="160px"
+                  className="object-cover"
                 />
               </div>
               <div className="flex-1">
