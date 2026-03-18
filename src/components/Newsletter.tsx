@@ -1,31 +1,37 @@
 "use client";
 
 import { useState } from "react";
+import { cmsGet, cmsSet } from "@/lib/cmsStorage";
+
+interface Subscriber {
+  email: string;
+  date: string;
+}
 
 export default function Newsletter() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("Thanks for subscribing!");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim()) return;
     setError("");
-    try {
-      const res = await fetch("/api/subscribers", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim() }),
-      });
-      if (res.ok) {
-        setSubmitted(true);
-      } else {
-        const data = await res.json();
-        setError(data.error || "Something went wrong");
-      }
-    } catch {
-      setError("Failed to subscribe. Please try again.");
+
+    const trimmedEmail = email.trim().toLowerCase();
+    const existing = cmsGet<Subscriber[]>("subscribers") || [];
+
+    if (existing.some((s) => s.email.toLowerCase() === trimmedEmail)) {
+      setSuccessMessage("You're already subscribed!");
+      setSubmitted(true);
+      return;
     }
+
+    existing.push({ email: trimmedEmail, date: new Date().toISOString() });
+    cmsSet("subscribers", existing);
+    setSuccessMessage("Thank you for subscribing!");
+    setSubmitted(true);
   };
 
   return (
@@ -40,7 +46,7 @@ export default function Newsletter() {
               🎉
             </span>
             <h2 className="mt-3 text-2xl font-bold">
-              Thanks for subscribing!
+              {successMessage}
             </h2>
             <p className="mt-2 text-purple-200">
               You&apos;ll start receiving the latest news in your inbox soon.

@@ -27,6 +27,15 @@ function slugify(text: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
+function parseDateToInput(dateStr: string): string {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+  const parsed = new Date(dateStr);
+  if (!isNaN(parsed.getTime())) {
+    return parsed.toISOString().split("T")[0];
+  }
+  return new Date().toISOString().split("T")[0];
+}
+
 export default function ArticleForm({ articleId }: { articleId?: string }) {
   const router = useRouter();
   const isEdit = !!articleId;
@@ -57,13 +66,21 @@ export default function ArticleForm({ articleId }: { articleId?: string }) {
       setLoading(true);
       cmsGetOrSeed<ArticleData[]>("articles", "/api/articles")
         .then((articles) => {
-          const found = articles.find((a) => a.slug === articleId);
-          if (found) {
-            setForm(found);
-            setBodyText(found.body?.join("\n\n") || "");
-            setTagsText(found.tags?.join(", ") || "");
-            setSlugEdited(true);
-          }
+            const found = articles.find((a) => a.slug === articleId);
+            if (found) {
+              setForm({
+                ...found,
+                title: found.title || "",
+                date: parseDateToInput(found.date || ""),
+                tags: found.tags || [],
+                isFeatured: found.isFeatured || false,
+                subcategory: found.subcategory || "",
+                imageUrl: found.imageUrl || "",
+              });
+              setBodyText(found.body?.join("\n\n") || "");
+              setTagsText(found.tags?.join(", ") || "");
+              setSlugEdited(true);
+            }
           setLoading(false);
         })
         .catch(() => setLoading(false));
@@ -117,7 +134,9 @@ export default function ArticleForm({ articleId }: { articleId?: string }) {
       } else {
         const maxId = articles.reduce((max, a) => Math.max(max, a.id || 0), 0);
         payload.id = maxId + 1;
-        payload.imageUrl = `https://picsum.photos/seed/${payload.slug}/800/450`;
+        if (!payload.imageUrl) {
+          payload.imageUrl = `https://picsum.photos/seed/${payload.slug}/800/450`;
+        }
         articles.push(payload as ArticleData);
       }
       cmsSet("articles", articles);
@@ -259,6 +278,21 @@ export default function ArticleForm({ articleId }: { articleId?: string }) {
               className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-[#6001D2] focus:outline-none focus:ring-2 focus:ring-[#6001D2]/20"
             />
           </div>
+        </div>
+
+        <div>
+          <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700">
+            Image URL
+          </label>
+          <input
+            id="imageUrl"
+            type="text"
+            value={form.imageUrl || ""}
+            onChange={(e) => updateField("imageUrl", e.target.value)}
+            placeholder="https://picsum.photos/800/400"
+            className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-[#6001D2] focus:outline-none focus:ring-2 focus:ring-[#6001D2]/20"
+          />
+          <p className="mt-1 text-xs text-gray-400">Leave empty to auto-generate from slug</p>
         </div>
 
         <div>
