@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import ShareButtons from '@/components/ShareButtons';
 import SkeletonCard from '@/components/SkeletonCard';
@@ -53,10 +54,13 @@ export default function HeroNews({ articles, loading: externalLoading }: HeroNew
         {/* Hero card */}
         <Link href={`/article/${heroArticle.slug}`} className="lg:col-span-2 block group">
           <article className="relative overflow-hidden rounded-lg shadow-md h-72 sm:h-96">
-            <img
+            <Image
               src={heroArticle.imageUrl}
               alt={heroArticle.title}
-              className="absolute inset-0 h-full w-full object-cover"
+              fill
+              sizes="(max-width: 1024px) 100vw, 66vw"
+              className="object-cover"
+              priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
             <div className="relative flex h-full flex-col justify-end p-6 text-white">
