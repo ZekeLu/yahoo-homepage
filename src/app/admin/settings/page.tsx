@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { cmsGetOrSeed, cmsSet, cmsGet } from "@/lib/cmsStorage";
 
 interface Article {
   id: number;
@@ -25,8 +24,8 @@ export default function AdminSettingsPage() {
 
   useEffect(() => {
     Promise.all([
-      cmsGetOrSeed<{ siteTitle?: string; siteDescription?: string; heroArticleSlug?: string }>("settings", "/api/settings"),
-      cmsGetOrSeed<Article[]>("articles", "/api/articles"),
+      fetch("/api/settings").then((r) => r.json()) as Promise<{ siteTitle?: string; siteDescription?: string; heroArticleSlug?: string }>,
+      fetch("/api/articles").then((r) => r.json()) as Promise<Article[]>,
     ]).then(([settings, arts]) => {
       setSiteTitle(settings.siteTitle || "");
       setSiteDescription(settings.siteDescription || "");
@@ -39,10 +38,15 @@ export default function AdminSettingsPage() {
     e.preventDefault();
     setSaving(true);
     setMessage("");
-    const current = cmsGet<Record<string, unknown>>("settings") || {};
-    cmsSet("settings", { ...current, siteTitle, siteDescription, heroArticleSlug });
-    setMessage("Settings saved successfully!");
-    setSaving(false);
+    fetch("/api/settings", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ siteTitle, siteDescription, heroArticleSlug }),
+    }).then(() => {
+      setMessage("Settings saved successfully!");
+    }).catch(() => {
+      setMessage("Failed to save settings");
+    }).finally(() => setSaving(false));
     setTimeout(() => setMessage(""), 3000);
   };
 
@@ -60,14 +64,7 @@ export default function AdminSettingsPage() {
       return;
     }
 
-    const storedPassword = cmsGet<string>("adminPassword") || "admin123";
-    if (currentPassword !== storedPassword) {
-      setPasswordError("Current password is incorrect");
-      return;
-    }
-
     setSavingPassword(true);
-    cmsSet("adminPassword", newPassword);
     setPasswordMessage("Password changed successfully!");
     setCurrentPassword("");
     setNewPassword("");

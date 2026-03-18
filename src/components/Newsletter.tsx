@@ -1,12 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { cmsGet, cmsSet } from "@/lib/cmsStorage";
 
-interface Subscriber {
-  email: string;
-  date: string;
-}
 
 export default function Newsletter() {
   const [email, setEmail] = useState("");
@@ -20,18 +15,22 @@ export default function Newsletter() {
     setError("");
 
     const trimmedEmail = email.trim().toLowerCase();
-    const existing = cmsGet<Subscriber[]>("subscribers") || [];
 
-    if (existing.some((s) => s.email.toLowerCase() === trimmedEmail)) {
-      setSuccessMessage("You're already subscribed!");
+    try {
+      const res = await fetch("/api/subscribers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: trimmedEmail }),
+      });
+      if (res.ok) {
+        setSuccessMessage("Thank you for subscribing!");
+      } else {
+        setSuccessMessage("You're already subscribed!");
+      }
       setSubmitted(true);
-      return;
+    } catch {
+      setError("Failed to subscribe. Please try again.");
     }
-
-    existing.push({ email: trimmedEmail, date: new Date().toISOString() });
-    cmsSet("subscribers", existing);
-    setSuccessMessage("Thank you for subscribing!");
-    setSubmitted(true);
   };
 
   return (
