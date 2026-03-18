@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
+import * as Sentry from '@sentry/nextjs';
 import { kvGet, kvSetWithTTL } from '@/lib/kv';
+import { withRateLimit } from '@/lib/apiRateLimit';
 
 const SYMBOLS = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA', 'META', 'NVDA', 'BTC-USD'];
 const CACHE_KEY = 'stocks_cache';
@@ -63,7 +65,10 @@ const FALLBACK: StockResult[] = [
   { symbol: 'BTC-USD', price: 101250.00, change: 1875.50, changePercent: 1.89 },
 ];
 
-export async function GET() {
+export async function GET(request: Request) {
+  const rateLimited = await withRateLimit(request);
+  if (rateLimited) return rateLimited;
+
   try {
     // Check KV cache first
     const cached = await kvGet<StockResult[]>(CACHE_KEY);
@@ -85,7 +90,8 @@ export async function GET() {
     await kvSetWithTTL(CACHE_KEY, stocks, CACHE_TTL);
 
     return NextResponse.json(stocks);
-  } catch {
+  } catch (error) {
+    Sentry.captureException(error);
     return NextResponse.json(FALLBACK);
   }
 }
