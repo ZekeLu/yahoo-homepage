@@ -73,17 +73,18 @@ export default function Sidebar({ trending }: SidebarProps) {
       <div className="rounded-lg bg-white dark:bg-gray-800 p-5 shadow-sm">
         <h2 className="mb-3 text-lg font-bold text-gray-900 dark:text-white">Weather</h2>
         {weatherLoading ? (
-          <div className="animate-pulse space-y-3">
+          <div className="animate-pulse space-y-3" style={{ minHeight: '120px' }}>
             <div className="flex items-center gap-4">
-              <div className="h-10 w-10 rounded bg-gray-200 dark:bg-gray-700" />
+              <div className="h-12 w-12 rounded bg-gray-200 dark:bg-gray-700" />
               <div className="space-y-2">
-                <div className="h-8 w-16 rounded bg-gray-200 dark:bg-gray-700" />
-                <div className="h-3 w-24 rounded bg-gray-200 dark:bg-gray-700" />
+                <div className="h-8 w-20 rounded bg-gray-200 dark:bg-gray-700" />
+                <div className="h-3 w-28 rounded bg-gray-200 dark:bg-gray-700" />
+                <div className="h-3 w-20 rounded bg-gray-200 dark:bg-gray-700" />
               </div>
             </div>
             <div className="grid grid-cols-4 gap-2">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-10 rounded bg-gray-200 dark:bg-gray-700" />
+                <div key={i} className="h-12 rounded bg-gray-200 dark:bg-gray-700" />
               ))}
             </div>
           </div>
@@ -138,14 +139,19 @@ export default function Sidebar({ trending }: SidebarProps) {
 
       {/* Ad Placeholder */}
       <div
-        className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800"
+        className="overflow-hidden rounded-lg bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/20 dark:to-blue-900/20"
         role="complementary"
         aria-label="Advertisement"
       >
-        <div className="text-center text-gray-400">
-          <p className="text-sm font-medium">Advertisement</p>
-          <p className="text-xs">300 × 250</p>
+        <p className="px-3 pt-2 text-xs text-gray-400">Sponsored</p>
+        <div className="relative mx-auto h-[250px] w-[300px]">
+          <img
+            src="https://picsum.photos/300/250?grayscale"
+            alt="Advertisement placeholder"
+            className="h-full w-full object-cover opacity-60"
+          />
         </div>
+        <p className="px-3 pb-2 text-center text-xs text-gray-400">Advertisement</p>
       </div>
     </aside>
   );

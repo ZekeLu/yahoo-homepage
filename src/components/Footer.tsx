@@ -1,8 +1,10 @@
+import Link from 'next/link';
+
 const footerLinks = [
-  { label: "About", href: "#" },
-  { label: "Help", href: "#" },
-  { label: "Terms", href: "#" },
-  { label: "Privacy", href: "#" },
+  { label: "About", href: "/about" },
+  { label: "Help", href: "/help" },
+  { label: "Terms", href: "/terms" },
+  { label: "Privacy", href: "/privacy" },
 ];
 
 export default function Footer() {
@@ -16,12 +18,12 @@ export default function Footer() {
           >
             {footerLinks.map((link) => (
               <li key={link.label}>
-                <a
+                <Link
                   href={link.href}
                   className="text-sm text-gray-500 dark:text-gray-400 hover:text-yahoo-purple transition-colors"
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

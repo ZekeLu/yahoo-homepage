@@ -10,31 +10,47 @@ interface StockResult {
 }
 
 async function fetchStock(symbol: string): Promise<StockResult | null> {
-  try {
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d`;
-    const res = await fetch(url, {
-      headers: { 'User-Agent': 'Mozilla/5.0' },
-      next: { revalidate: 60 },
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    const meta = data.chart?.result?.[0]?.meta;
-    if (!meta) return null;
+  const endpoints = [
+    `https://query2.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d`,
+    `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d`,
+  ];
 
-    const currentPrice = meta.regularMarketPrice ?? 0;
-    const previousClose = meta.chartPreviousClose ?? meta.previousClose ?? currentPrice;
-    const change = currentPrice - previousClose;
-    const changePercent = previousClose !== 0 ? (change / previousClose) * 100 : 0;
+  for (const url of endpoints) {
+    try {
+      const res = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+          'Accept': 'application/json',
+        },
+        next: { revalidate: 300 },
+      });
+      if (!res.ok) {
+        console.error(`Stock API ${url} returned ${res.status} for ${symbol}`);
+        continue;
+      }
+      const data = await res.json();
+      const meta = data.chart?.result?.[0]?.meta;
+      if (!meta) {
+        console.error(`No meta data for ${symbol} from ${url}`);
+        continue;
+      }
 
-    return {
-      symbol,
-      price: Math.round(currentPrice * 100) / 100,
-      change: Math.round(change * 100) / 100,
-      changePercent: Math.round(changePercent * 100) / 100,
-    };
-  } catch {
-    return null;
+      const currentPrice = meta.regularMarketPrice ?? 0;
+      const previousClose = meta.chartPreviousClose ?? meta.previousClose ?? currentPrice;
+      const change = currentPrice - previousClose;
+      const changePercent = previousClose !== 0 ? (change / previousClose) * 100 : 0;
+
+      return {
+        symbol,
+        price: Math.round(currentPrice * 100) / 100,
+        change: Math.round(change * 100) / 100,
+        changePercent: Math.round(changePercent * 100) / 100,
+      };
+    } catch (err) {
+      console.error(`Stock fetch error for ${symbol} from ${url}:`, err);
+    }
   }
+  return null;
 }
 
 // Static fallback data
