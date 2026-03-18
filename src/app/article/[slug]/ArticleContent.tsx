@@ -22,7 +22,7 @@ export default function ArticleContent() {
     return (
       <div className="flex min-h-screen flex-col">
         <Navbar />
-        <main className="flex-1 bg-gray-50 dark:bg-gray-900">
+        <main id="main-content" role="main" className="flex-1 bg-gray-50 dark:bg-gray-900">
           <div className="animate-pulse h-64 w-full bg-gray-200 dark:bg-gray-700 sm:h-80 md:h-96" />
           <div className="mx-auto max-w-3xl px-4 py-8 space-y-4">
             <div className="h-6 w-24 rounded bg-gray-200 dark:bg-gray-700" />
@@ -73,7 +73,7 @@ export default function ArticleContent() {
     <div className="flex min-h-screen flex-col">
       <Navbar />
 
-      <main className="flex-1 bg-gray-50 dark:bg-gray-900">
+      <main id="main-content" role="main" className="flex-1 bg-gray-50 dark:bg-gray-900">
         {/* Hero image */}
         <div className="relative h-64 w-full overflow-hidden sm:h-80 md:h-96">
           <Image

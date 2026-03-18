@@ -119,7 +119,7 @@ export default function Sidebar({ trending }: SidebarProps) {
       </div>
 
       {/* Trending Keywords */}
-      <div className="rounded-lg bg-white dark:bg-gray-800 p-5 shadow-sm">
+      <div className="rounded-lg bg-white dark:bg-gray-800 p-5 shadow-sm" aria-live="polite">
         <h2 className="mb-3 text-lg font-bold text-gray-900 dark:text-white">Trending</h2>
         <ul className="space-y-2" role="list">
           {(trending ?? defaultTrendingKeywords).map((keyword, index) => (

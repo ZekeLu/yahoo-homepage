@@ -68,6 +68,8 @@ export default function StockTicker() {
       className={`overflow-hidden bg-gray-900 py-2 text-sm transition-opacity ${loading ? 'opacity-60' : 'opacity-100'}`}
       aria-label="Stock ticker"
       role="marquee"
+      aria-live="polite"
+      aria-atomic="true"
     >
       <div className="ticker-scroll flex">
         <div className="flex shrink-0">{tickerContent}</div>
