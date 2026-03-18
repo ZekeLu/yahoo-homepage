@@ -75,8 +75,8 @@ export default function AdminDashboard() {
       <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
       <p className="mt-1 text-sm text-gray-500">Overview of your Yahoo homepage content</p>
 
-      <div className="mt-4 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800">
-        Changes are saved locally in this browser. In production, connect a database for persistence.
+      <div className="mt-4 rounded-lg bg-indigo-50 border border-indigo-200 p-3 text-sm text-indigo-700">
+        Demo CMS — All changes are saved in this browser&apos;s localStorage. Data persists across sessions on the same browser.
       </div>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

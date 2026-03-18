@@ -91,7 +91,7 @@ export default function AdminArticlesPage() {
               <th className="px-4 py-3 font-medium text-gray-500">Category</th>
               <th className="px-4 py-3 font-medium text-gray-500">Author</th>
               <th className="px-4 py-3 font-medium text-gray-500">Date</th>
-              <th className="px-4 py-3 font-medium text-gray-500">Actions</th>
+              <th className="px-4 py-3 font-medium text-gray-500 whitespace-nowrap">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y">
@@ -108,7 +108,7 @@ export default function AdminArticlesPage() {
                 <td className="px-4 py-3 text-gray-500">{article.category}</td>
                 <td className="px-4 py-3 text-gray-500">{article.author}</td>
                 <td className="px-4 py-3 text-gray-500">{article.date}</td>
-                <td className="px-4 py-3">
+                <td className="px-4 py-3 whitespace-nowrap">
                   <div className="flex gap-2">
                     <Link
                       href={`/admin/articles/${article.slug}/edit`}
