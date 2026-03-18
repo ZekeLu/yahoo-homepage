@@ -105,6 +105,33 @@ describe('Stocks API route', () => {
     expect(data[0].symbol).toBe('AAPL');
   });
 
+  it('falls back when fetch throws an error', async () => {
+    process.env.FINNHUB_API_KEY = 'test-api-key';
+
+    (global.fetch as jest.Mock).mockRejectedValue(new Error('network error'));
+
+    const res = await GET();
+    const data = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(data[0].symbol).toBe('AAPL');
+    expect(data[0].price).toBe(198.45);
+  });
+
+  it('returns fallback when outer catch triggers', async () => {
+    // Force kvGet to throw synchronously to trigger the outer catch
+    mockKvGet.mockImplementationOnce(() => {
+      throw new Error('sync kv error');
+    });
+
+    const res = await GET();
+    const data = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(Array.isArray(data)).toBe(true);
+    expect(data.length).toBe(8);
+  });
+
   it('falls back when Finnhub returns zero price', async () => {
     process.env.FINNHUB_API_KEY = 'test-api-key';
 

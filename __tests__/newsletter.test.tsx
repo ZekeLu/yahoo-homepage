@@ -98,4 +98,20 @@ describe('Newsletter component', () => {
     // fetch should not have been called
     expect(mockedFetch).not.toHaveBeenCalled();
   });
+
+  it('does not submit when email is only whitespace', async () => {
+    render(<Newsletter />);
+
+    const input = screen.getByPlaceholderText('Enter your email');
+    const form = input.closest('form')!;
+
+    // Programmatically set value to whitespace and submit form
+    const { fireEvent } = require('@testing-library/react');
+    fireEvent.change(input, { target: { value: '   ' } });
+    fireEvent.submit(form);
+
+    // Should still show the form (not submitted)
+    expect(screen.getByPlaceholderText('Enter your email')).toBeInTheDocument();
+    expect(mockedFetch).not.toHaveBeenCalled();
+  });
 });

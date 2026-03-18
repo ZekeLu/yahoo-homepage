@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import { middleware } from '@/middleware';
+import { middleware, config } from '@/middleware';
 import { NextRequest } from 'next/server';
 
 function createMockRequest(
@@ -70,5 +70,10 @@ describe('Middleware', () => {
     expect(res.status).toBe(307);
     const location = res.headers.get('location');
     expect(location).toContain('/admin/login');
+  });
+
+  it('exports config with correct matcher', () => {
+    expect(config).toBeDefined();
+    expect(config.matcher).toEqual(['/admin/:path*']);
   });
 });

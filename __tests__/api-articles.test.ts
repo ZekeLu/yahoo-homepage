@@ -41,6 +41,17 @@ describe('Articles API route', () => {
       expect(res.status).toBe(200);
       expect(Array.isArray(data)).toBe(true);
     });
+
+    it('falls back to allArticles when outer catch triggers', async () => {
+      // Make readDataFile.catch itself throw to trigger outer catch
+      mockReadDataFile.mockImplementationOnce(() => {
+        throw new Error('sync error');
+      });
+      const res = await GET();
+      const data = await res.json();
+      expect(res.status).toBe(200);
+      expect(Array.isArray(data)).toBe(true);
+    });
   });
 
   describe('POST /api/articles', () => {
@@ -86,6 +97,31 @@ describe('Articles API route', () => {
       expect(res.status).toBe(500);
       const data = await res.json();
       expect(data.error).toBeDefined();
+    });
+
+    it('falls back to allArticles in POST when readDataFile rejects', async () => {
+      mockReadDataFile.mockRejectedValueOnce(new Error('fail'));
+      const article = {
+        slug: 'fallback-post',
+        title: 'Fallback',
+        author: 'A',
+        snippet: '',
+        category: 'News',
+        section: 'news',
+        date: '',
+        body: [],
+        imageUrl: '',
+      };
+
+      const req = new Request('http://localhost/api/articles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(article),
+      });
+
+      const res = await POST(req);
+      expect(res.status).toBe(201);
+      expect(mockWriteDataFile).toHaveBeenCalled();
     });
 
     it('appends the new article to the existing list', async () => {

@@ -107,4 +107,24 @@ describe('Article page (ArticleContent)', () => {
     // Restore
     navigation.useParams = originalUseParams;
   });
+
+  it('handles non-string slug param (array)', async () => {
+    const navigation = require('next/navigation');
+    const originalUseParams = navigation.useParams;
+    // params.slug could be string[] in Next.js
+    navigation.useParams = () => ({ slug: ['multiple', 'segments'] });
+
+    mockedFetch.mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve(allArticles),
+    });
+
+    render(<ArticleContent />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Article not found')).toBeInTheDocument();
+    });
+
+    navigation.useParams = originalUseParams;
+  });
 });
