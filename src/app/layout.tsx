@@ -3,6 +3,7 @@ import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import { WebVitals } from "@/components/WebVitals";
 import { JsonLd } from "@/components/JsonLd";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const SITE_URL = "https://yahoo-homepage.vercel.app";
 
@@ -50,6 +51,7 @@ export const metadata: Metadata = {
     creator: "@Yahoo",
     images: [`${SITE_URL}/og-image.png`],
   },
+  manifest: "/manifest.json",
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
@@ -117,7 +119,9 @@ export default function RootLayout({
           <JsonLd data={websiteSchema} />
           <JsonLd data={organizationSchema} />
           <WebVitals />
-          {children}
+          <ErrorBoundary name="RootLayout">
+            {children}
+          </ErrorBoundary>
         </ThemeProvider>
       </body>
     </html>
