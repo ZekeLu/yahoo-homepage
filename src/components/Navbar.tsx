@@ -68,6 +68,7 @@ export default function Navbar() {
                         target.scrollIntoView({ behavior: "smooth" });
                       }
                     }}
+                    aria-current={isActive ? "true" : undefined}
                     className={`text-sm font-medium transition-colors ${
                       isActive
                         ? "font-bold text-white underline underline-offset-4"
@@ -146,6 +147,7 @@ export default function Navbar() {
                     }
                     setMenuOpen(false);
                   }}
+                  aria-current={isActive ? "true" : undefined}
                   className={`block rounded-md px-3 py-2 text-base font-medium transition-colors ${
                     isActive
                       ? "bg-yahoo-purple-dark font-bold underline underline-offset-4"

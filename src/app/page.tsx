@@ -62,7 +62,7 @@ export default function Home() {
       </Suspense>
       <SearchBar />
 
-      <main className="flex-1">
+      <main id="main-content" role="main" className="flex-1">
         <HeroNews articles={articles} loading={loading} />
 
         {/* Content + Sidebar layout */}
@@ -86,6 +86,7 @@ export default function Home() {
 
       <Footer />
       <BackToTop />
+
     </div>
   );
 }

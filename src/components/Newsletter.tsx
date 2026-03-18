@@ -81,7 +81,7 @@ export default function Newsletter() {
               </button>
             </form>
             {error && (
-              <p className="mt-3 text-sm text-red-300">{error}</p>
+              <p className="mt-3 text-sm text-red-300" role="alert">{error}</p>
             )}
           </>
         )}

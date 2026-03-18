@@ -9,7 +9,7 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="mt-8 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+    <footer role="contentinfo" className="mt-8 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <nav aria-label="Footer navigation">
           <ul

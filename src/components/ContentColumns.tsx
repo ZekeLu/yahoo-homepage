@@ -118,6 +118,8 @@ export default function ContentColumns({ articles, loading: externalLoading }: C
                       onClick={() =>
                         setActiveFilters((prev) => ({ ...prev, [section]: tab }))
                       }
+                      aria-pressed={activeFilters[section] === tab}
+                      aria-label={`Filter ${section} by ${tab}`}
                       className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
                         activeFilters[section] === tab
                           ? "bg-yahoo-purple text-white"

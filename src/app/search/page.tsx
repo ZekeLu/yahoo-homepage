@@ -93,7 +93,7 @@ function SearchPageContent() {
     <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
       <Navbar />
       <SearchBar initialQuery={currentQuery} />
-      <main className="flex-1">
+      <main id="main-content" role="main" className="flex-1">
         <SearchResults />
       </main>
       <Footer />

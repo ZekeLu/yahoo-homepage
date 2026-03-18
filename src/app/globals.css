@@ -34,3 +34,53 @@ body {
 .ticker-scroll {
   animation: ticker-scroll 30s linear infinite;
 }
+
+/* Skip navigation link */
+.skip-nav {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.skip-nav:focus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: auto;
+  height: auto;
+  padding: 1rem 1.5rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background-color: #6001D2;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  outline: 3px solid #7B2FF2;
+  outline-offset: 2px;
+}
+
+/* Focus-visible ring for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid #6001D2;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #6001D2;
+  outline-offset: 2px;
+}
