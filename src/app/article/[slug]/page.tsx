@@ -4,7 +4,8 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { getArticleBySlug, allArticles } from '@/lib/articles';
+import { type Article } from '@/lib/articles';
+import { useCmsArticles } from '@/hooks/useCmsData';
 
 function calculateReadingTime(body: string[]): number {
   const wordCount = body.join(' ').split(/\s+/).length;
@@ -14,7 +15,31 @@ function calculateReadingTime(body: string[]): number {
 export default function ArticlePage() {
   const params = useParams();
   const slug = typeof params.slug === 'string' ? params.slug : '';
-  const article = getArticleBySlug(slug);
+  const { articles, loading } = useCmsArticles();
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <Navbar />
+        <main className="flex-1 bg-gray-50 dark:bg-gray-900">
+          <div className="animate-pulse h-64 w-full bg-gray-200 dark:bg-gray-700 sm:h-80 md:h-96" />
+          <div className="mx-auto max-w-3xl px-4 py-8 space-y-4">
+            <div className="h-6 w-24 rounded bg-gray-200 dark:bg-gray-700" />
+            <div className="h-10 w-3/4 rounded bg-gray-200 dark:bg-gray-700" />
+            <div className="h-4 w-1/2 rounded bg-gray-200 dark:bg-gray-700" />
+            <div className="mt-8 space-y-3">
+              <div className="h-4 w-full rounded bg-gray-200 dark:bg-gray-700" />
+              <div className="h-4 w-full rounded bg-gray-200 dark:bg-gray-700" />
+              <div className="h-4 w-2/3 rounded bg-gray-200 dark:bg-gray-700" />
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  const article = articles.find((a: Article) => a.slug === slug);
 
   if (!article) {
     return (
@@ -39,8 +64,8 @@ export default function ArticlePage() {
   }
 
   const readingTime = calculateReadingTime(article.body);
-  const relatedArticles = allArticles
-    .filter((a) => a.section === article.section && a.slug !== article.slug)
+  const relatedArticles = articles
+    .filter((a: Article) => a.section === article.section && a.slug !== article.slug)
     .slice(0, 3);
 
   return (

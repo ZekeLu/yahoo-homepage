@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import ShareButtons from "@/components/ShareButtons";
 import SkeletonCard from "@/components/SkeletonCard";
-import { allArticles } from "@/lib/articles";
+import { allArticles as bundledArticles, type Article } from "@/lib/articles";
 
 interface FilterConfig {
   section: string;
@@ -27,8 +27,13 @@ const sectionIcons: Record<string, string> = {
 
 const sections = ["Finance", "Sports", "Entertainment", "Tech"];
 
-export default function ContentColumns() {
-  const [loading, setLoading] = useState(true);
+interface ContentColumnsProps {
+  articles?: Article[];
+  loading?: boolean;
+}
+
+export default function ContentColumns({ articles, loading: externalLoading }: ContentColumnsProps) {
+  const [internalLoading, setInternalLoading] = useState(true);
   const [activeFilters, setActiveFilters] = useState<Record<string, string>>({
     Finance: "All",
     Sports: "All",
@@ -43,13 +48,16 @@ export default function ContentColumns() {
   });
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1000);
+    const timer = setTimeout(() => setInternalLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
+  const isLoading = externalLoading ?? internalLoading;
+  const sourceArticles = articles ?? bundledArticles;
+
   const getFilteredArticles = (section: string) => {
     const sectionKey = section.toLowerCase();
-    const sectionArticles = allArticles.filter((a) => a.section === sectionKey);
+    const sectionArticles = sourceArticles.filter((a) => a.section === sectionKey);
     const filter = activeFilters[section];
     if (filter === "All") return sectionArticles;
     return sectionArticles.filter((a) => a.subcategory === filter);
@@ -65,7 +73,7 @@ export default function ContentColumns() {
     setExpandedSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <section aria-label="Category news" className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
