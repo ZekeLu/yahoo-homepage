@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { cmsGetOrSeed, cmsSet } from "@/lib/cmsStorage";
 
 export default function AdminTrendingPage() {
   const [topics, setTopics] = useState<string[]>([]);
@@ -12,7 +11,8 @@ export default function AdminTrendingPage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    cmsGetOrSeed<string[]>("trending", "/api/trending")
+    fetch("/api/trending")
+      .then((r) => (r.ok ? r.json() : []))
       .then(setTopics)
       .catch(() => {});
   }, []);
@@ -60,7 +60,11 @@ export default function AdminTrendingPage() {
   const handleSave = () => {
     setSaving(true);
     setSaved(false);
-    cmsSet("trending", topics);
+    fetch("/api/trending", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(topics),
+    }).catch(() => {});
     setSaved(true);
     setSaving(false);
     setTimeout(() => setSaved(false), 3000);

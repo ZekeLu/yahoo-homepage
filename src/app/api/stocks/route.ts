@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
+import { kvGet, kvSetWithTTL } from '@/lib/kv';
 
 const SYMBOLS = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA', 'META', 'NVDA', 'BTC-USD'];
+const CACHE_KEY = 'stocks_cache';
+const CACHE_TTL = 300; // 5 minutes
 
 interface StockResult {
   symbol: string;
@@ -9,48 +12,43 @@ interface StockResult {
   changePercent: number;
 }
 
-async function fetchStock(symbol: string): Promise<StockResult | null> {
-  const endpoints = [
-    `https://query2.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d`,
-    `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d`,
-  ];
+interface FinnhubQuote {
+  c: number;  // current price
+  d: number;  // change
+  dp: number; // percent change
+  h: number;  // high
+  l: number;  // low
+  o: number;  // open
+  pc: number; // previous close
+}
 
-  for (const url of endpoints) {
-    try {
-      const res = await fetch(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-          'Accept': 'application/json',
-        },
-        next: { revalidate: 300 },
-      });
-      if (!res.ok) {
-        console.error(`Stock API ${url} returned ${res.status} for ${symbol}`);
-        continue;
-      }
-      const data = await res.json();
-      const meta = data.chart?.result?.[0]?.meta;
-      if (!meta) {
-        console.error(`No meta data for ${symbol} from ${url}`);
-        continue;
-      }
+async function fetchFinnhubQuote(
+  symbol: string,
+  apiKey: string
+): Promise<StockResult | null> {
+  const finnhubSymbol = symbol === 'BTC-USD' ? 'BINANCE:BTCUSDT' : symbol;
 
-      const currentPrice = meta.regularMarketPrice ?? 0;
-      const previousClose = meta.chartPreviousClose ?? meta.previousClose ?? currentPrice;
-      const change = currentPrice - previousClose;
-      const changePercent = previousClose !== 0 ? (change / previousClose) * 100 : 0;
-
-      return {
-        symbol,
-        price: Math.round(currentPrice * 100) / 100,
-        change: Math.round(change * 100) / 100,
-        changePercent: Math.round(changePercent * 100) / 100,
-      };
-    } catch (err) {
-      console.error(`Stock fetch error for ${symbol} from ${url}:`, err);
+  try {
+    const url = `https://finnhub.io/api/v1/quote?symbol=${finnhubSymbol}&token=${apiKey}`;
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) {
+      console.error(`Finnhub returned ${res.status} for ${symbol}`);
+      return null;
     }
+    const data: FinnhubQuote = await res.json();
+
+    if (!data.c || data.c === 0) return null;
+
+    return {
+      symbol,
+      price: Math.round(data.c * 100) / 100,
+      change: Math.round(data.d * 100) / 100,
+      changePercent: Math.round(data.dp * 100) / 100,
+    };
+  } catch (err) {
+    console.error(`Finnhub fetch error for ${symbol}:`, err);
+    return null;
   }
-  return null;
 }
 
 // Static fallback data
@@ -67,8 +65,25 @@ const FALLBACK: StockResult[] = [
 
 export async function GET() {
   try {
-    const results = await Promise.all(SYMBOLS.map(fetchStock));
+    // Check KV cache first
+    const cached = await kvGet<StockResult[]>(CACHE_KEY);
+    if (cached) {
+      return NextResponse.json(cached);
+    }
+
+    const apiKey = process.env.FINNHUB_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json(FALLBACK);
+    }
+
+    const results = await Promise.all(
+      SYMBOLS.map((s) => fetchFinnhubQuote(s, apiKey))
+    );
     const stocks = results.map((result, i) => result ?? FALLBACK[i]);
+
+    // Cache results in KV for 5 minutes
+    await kvSetWithTTL(CACHE_KEY, stocks, CACHE_TTL);
+
     return NextResponse.json(stocks);
   } catch {
     return NextResponse.json(FALLBACK);

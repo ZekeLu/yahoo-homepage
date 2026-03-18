@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { cmsGetOrSeed } from "@/lib/cmsStorage";
 
 interface Article {
   id: number;
@@ -27,9 +26,9 @@ export default function AdminDashboard() {
     async function loadStats() {
       try {
         const [articles, trending, subscribers] = await Promise.all([
-          cmsGetOrSeed<Article[]>("articles", "/api/articles"),
-          cmsGetOrSeed<string[]>("trending", "/api/trending"),
-          cmsGetOrSeed<{ email: string }[]>("subscribers", "/api/subscribers"),
+          fetch("/api/articles").then((r) => r.json()) as Promise<Article[]>,
+          fetch("/api/trending").then((r) => r.json()) as Promise<string[]>,
+          fetch("/api/subscribers").then((r) => r.json()) as Promise<{ email: string }[]>,
         ]);
 
         const bySection: Record<string, number> = {};
@@ -76,7 +75,7 @@ export default function AdminDashboard() {
       <p className="mt-1 text-sm text-gray-500">Overview of your Yahoo homepage content</p>
 
       <div className="mt-4 rounded-lg bg-indigo-50 border border-indigo-200 p-3 text-sm text-indigo-700">
-        Demo CMS — All changes are saved in this browser&apos;s localStorage. Data persists across sessions on the same browser.
+        CMS powered by Vercel KV — All changes are saved server-side and sync across devices.
       </div>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { cmsGet } from '@/lib/cmsStorage';
 import { allArticles as bundledArticles, type Article } from '@/lib/articles';
 
 interface CmsData {
@@ -27,17 +26,20 @@ export function useCmsData(): CmsData {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const localArticles = cmsGet<Article[]>('articles');
-    if (localArticles && localArticles.length > 0) {
-      setArticles(localArticles);
-    }
-
-    const localTrending = cmsGet<string[]>('trending');
-    if (localTrending && localTrending.length > 0) {
-      setTrending(localTrending);
-    }
-
-    setLoading(false);
+    Promise.all([
+      fetch('/api/articles').then((r) => (r.ok ? r.json() : null)),
+      fetch('/api/trending').then((r) => (r.ok ? r.json() : null)),
+    ])
+      .then(([apiArticles, apiTrending]) => {
+        if (Array.isArray(apiArticles) && apiArticles.length > 0) {
+          setArticles(apiArticles);
+        }
+        if (Array.isArray(apiTrending) && apiTrending.length > 0) {
+          setTrending(apiTrending);
+        }
+      })
+      .catch(() => { /* keep defaults */ })
+      .finally(() => setLoading(false));
   }, []);
 
   return { articles, trending, loading };
@@ -48,11 +50,15 @@ export function useCmsArticles(): { articles: Article[]; loading: boolean } {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const localArticles = cmsGet<Article[]>('articles');
-    if (localArticles && localArticles.length > 0) {
-      setArticles(localArticles);
-    }
-    setLoading(false);
+    fetch('/api/articles')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((apiArticles) => {
+        if (Array.isArray(apiArticles) && apiArticles.length > 0) {
+          setArticles(apiArticles);
+        }
+      })
+      .catch(() => { /* keep defaults */ })
+      .finally(() => setLoading(false));
   }, []);
 
   return { articles, loading };

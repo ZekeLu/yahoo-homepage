@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { cmsGetOrSeed, cmsSet } from "@/lib/cmsStorage";
 
 interface ArticleData {
   id?: number;
@@ -64,8 +63,9 @@ export default function ArticleForm({ articleId }: { articleId?: string }) {
   useEffect(() => {
     if (isEdit) {
       setLoading(true);
-      cmsGetOrSeed<ArticleData[]>("articles", "/api/articles")
-        .then((articles) => {
+      fetch("/api/articles")
+        .then((r) => (r.ok ? r.json() : []))
+        .then((articles: ArticleData[]) => {
             const found = articles.find((a) => a.slug === articleId);
             if (found) {
               setForm({
@@ -125,21 +125,22 @@ export default function ArticleForm({ articleId }: { articleId?: string }) {
     };
 
     try {
-      const articles = await cmsGetOrSeed<ArticleData[]>("articles", "/api/articles");
       if (isEdit) {
-        const index = articles.findIndex((a) => a.slug === articleId);
-        if (index !== -1) {
-          articles[index] = { ...articles[index], ...payload };
-        }
+        await fetch(`/api/articles/${articleId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
       } else {
-        const maxId = articles.reduce((max, a) => Math.max(max, a.id || 0), 0);
-        payload.id = maxId + 1;
         if (!payload.imageUrl) {
           payload.imageUrl = `https://picsum.photos/seed/${payload.slug}/800/450`;
         }
-        articles.push(payload as ArticleData);
+        await fetch("/api/articles", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
       }
-      cmsSet("articles", articles);
       router.push("/admin/articles");
     } catch {
       // handle error silently

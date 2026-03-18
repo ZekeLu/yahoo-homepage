@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { cmsGetOrSeed, cmsSet } from "@/lib/cmsStorage";
 
 interface Article {
   id: number;
@@ -23,16 +22,17 @@ export default function AdminArticlesPage() {
   const perPage = 10;
 
   useEffect(() => {
-    cmsGetOrSeed<Article[]>("articles", "/api/articles")
+    fetch("/api/articles")
+      .then((r) => (r.ok ? r.json() : []))
       .then(setArticles)
       .catch(() => {});
   }, []);
 
   const handleDelete = () => {
     if (!deleteSlug) return;
+    fetch(`/api/articles/${deleteSlug}`, { method: "DELETE" }).catch(() => {});
     const updated = articles.filter((a) => a.slug !== deleteSlug);
     setArticles(updated);
-    cmsSet("articles", updated);
     setDeleteSlug(null);
   };
 
