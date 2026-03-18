@@ -9,6 +9,7 @@ import ContentColumns from "@/components/ContentColumns";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import { useCmsData } from "@/hooks/useCmsData";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const StockTicker = dynamic(() => import("@/components/StockTicker"), {
   loading: () => (
@@ -57,9 +58,11 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <Suspense fallback={null}>
-        <StockTicker />
-      </Suspense>
+      <ErrorBoundary name="StockTicker">
+        <Suspense fallback={null}>
+          <StockTicker />
+        </Suspense>
+      </ErrorBoundary>
       <SearchBar />
 
       <main id="main-content" role="main" className="flex-1">
@@ -72,9 +75,11 @@ export default function Home() {
               <ContentColumns articles={articles} loading={loading} />
             </div>
             <div className="lg:col-span-1">
-              <Suspense fallback={null}>
-                <Sidebar trending={trending} />
-              </Suspense>
+              <ErrorBoundary name="WeatherWidget">
+                <Suspense fallback={null}>
+                  <Sidebar trending={trending} />
+                </Suspense>
+              </ErrorBoundary>
             </div>
           </div>
         </div>
