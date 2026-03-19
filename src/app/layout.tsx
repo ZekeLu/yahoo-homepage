@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
+import { I18nProvider } from "@/components/I18nProvider";
 import { WebVitals } from "@/components/WebVitals";
 import { JsonLd } from "@/components/JsonLd";
 import ErrorBoundary from "@/components/ErrorBoundary";
@@ -116,12 +117,14 @@ export default function RootLayout({
           Skip to main content
         </a>
         <ThemeProvider>
-          <JsonLd data={websiteSchema} />
-          <JsonLd data={organizationSchema} />
-          <WebVitals />
-          <ErrorBoundary name="RootLayout">
-            {children}
-          </ErrorBoundary>
+          <I18nProvider>
+            <JsonLd data={websiteSchema} />
+            <JsonLd data={organizationSchema} />
+            <WebVitals />
+            <ErrorBoundary name="RootLayout">
+              {children}
+            </ErrorBoundary>
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>

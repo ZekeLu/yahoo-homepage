@@ -1,20 +1,29 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useTheme } from "@/components/ThemeProvider";
+import { useI18n } from "@/components/I18nProvider";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
-const navLinks = [
-  { label: "News", href: "#news" },
-  { label: "Finance", href: "#finance" },
-  { label: "Sports", href: "#sports" },
-  { label: "Entertainment", href: "#entertainment" },
-  { label: "Tech", href: "#tech" },
+interface NavLink {
+  labelKey: string;
+  href: string;
+}
+
+const navLinks: NavLink[] = [
+  { labelKey: "nav.news", href: "#news" },
+  { labelKey: "nav.finance", href: "#finance" },
+  { labelKey: "nav.sports", href: "#sports" },
+  { labelKey: "nav.entertainment", href: "#entertainment" },
+  { labelKey: "nav.tech", href: "#tech" },
 ];
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const { theme, toggleTheme } = useTheme();
+  const { t } = useI18n();
 
   useEffect(() => {
     const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
@@ -57,8 +66,9 @@ export default function Navbar() {
             {navLinks.map((link) => {
               const sectionId = link.href.replace("#", "");
               const isActive = activeSection === sectionId;
+              const label = t(link.labelKey);
               return (
-                <li key={link.label}>
+                <li key={link.labelKey}>
                   <a
                     href={link.href}
                     onClick={(e) => {
@@ -75,14 +85,25 @@ export default function Navbar() {
                         : "hover:text-purple-200"
                     }`}
                   >
-                    {link.label}
+                    {label}
                   </a>
                 </li>
               );
             })}
+            <li>
+              <Link
+                href="/bookmarks"
+                className="text-sm font-medium transition-colors hover:text-purple-200"
+              >
+                {t('nav.bookmarks')}
+              </Link>
+            </li>
           </ul>
 
           <div className="flex items-center gap-2">
+            {/* Locale switcher */}
+            <LocaleSwitcher />
+
             {/* Dark mode toggle */}
             <button
               type="button"
@@ -135,8 +156,9 @@ export default function Navbar() {
           {navLinks.map((link) => {
             const sectionId = link.href.replace("#", "");
             const isActive = activeSection === sectionId;
+            const label = t(link.labelKey);
             return (
-              <li key={link.label}>
+              <li key={link.labelKey}>
                 <a
                   href={link.href}
                   onClick={(e) => {
@@ -154,11 +176,20 @@ export default function Navbar() {
                       : "hover:bg-yahoo-purple-dark"
                   }`}
                 >
-                  {link.label}
+                  {label}
                 </a>
               </li>
             );
           })}
+          <li>
+            <Link
+              href="/bookmarks"
+              className="block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-yahoo-purple-dark"
+              onClick={() => setMenuOpen(false)}
+            >
+              {t('nav.bookmarks')}
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>

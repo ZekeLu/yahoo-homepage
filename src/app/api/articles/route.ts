@@ -14,6 +14,24 @@ export async function GET(request: Request) {
     const articles = await readDataFile<Article[]>('articles.json').catch(
       () => allArticles
     );
+
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') ?? '0', 10);
+    const limit = parseInt(searchParams.get('limit') ?? '0', 10);
+
+    // If pagination params are provided, return paginated results
+    if (page > 0 && limit > 0) {
+      const start = (page - 1) * limit;
+      const paginated = articles.slice(start, start + limit);
+      return NextResponse.json({
+        articles: paginated,
+        page,
+        limit,
+        total: articles.length,
+        hasMore: start + limit < articles.length,
+      });
+    }
+
     return NextResponse.json(articles);
   } catch (error) {
     Sentry.captureException(error);

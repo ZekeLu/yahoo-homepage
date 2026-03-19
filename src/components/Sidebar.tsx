@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useReadingHistory } from '@/hooks/useReadingHistory';
 
 const defaultTrendingKeywords = [
   "Climate Summit",
@@ -45,6 +46,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ trending }: SidebarProps) {
+  const { history, loaded: historyLoaded } = useReadingHistory();
   const [currentDate, setCurrentDate] = useState('');
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [weatherLoading, setWeatherLoading] = useState(true);
@@ -137,6 +139,34 @@ export default function Sidebar({ trending }: SidebarProps) {
           ))}
         </ul>
       </div>
+
+      {/* Recently Read */}
+      {historyLoaded && history.length > 0 && (
+        <div className="rounded-lg bg-white dark:bg-gray-800 p-5 shadow-sm">
+          <h2 className="mb-3 text-lg font-bold text-gray-900 dark:text-white">Recently Read</h2>
+          <ul className="space-y-2" role="list">
+            {history.slice(0, 5).map((entry) => (
+              <li key={entry.slug}>
+                <Link
+                  href={`/article/${entry.slug}`}
+                  className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300 hover:text-yahoo-purple transition-colors group"
+                >
+                  <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded">
+                    <Image
+                      src={entry.imageUrl}
+                      alt={entry.title}
+                      fill
+                      sizes="40px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <span className="line-clamp-2 group-hover:underline">{entry.title}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Ad Placeholder */}
       <div

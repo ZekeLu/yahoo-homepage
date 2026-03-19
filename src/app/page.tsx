@@ -11,6 +11,23 @@ import BackToTop from "@/components/BackToTop";
 import { useCmsData } from "@/hooks/useCmsData";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
+const InfiniteNewsFeed = dynamic(() => import("@/components/InfiniteNewsFeed"), {
+  loading: () => (
+    <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <div className="h-6 w-32 animate-pulse rounded bg-gray-200 dark:bg-gray-700 mb-4" />
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-sm animate-pulse">
+            <div className="aspect-video rounded bg-gray-200 dark:bg-gray-700 mb-3" />
+            <div className="h-4 w-3/4 rounded bg-gray-200 dark:bg-gray-700" />
+          </div>
+        ))}
+      </div>
+    </section>
+  ),
+  ssr: false,
+});
+
 const StockTicker = dynamic(() => import("@/components/StockTicker"), {
   loading: () => (
     <div className="overflow-hidden bg-gray-900 py-2 text-sm">
@@ -83,6 +100,13 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Infinite scroll news feed */}
+        <ErrorBoundary name="InfiniteNewsFeed">
+          <Suspense fallback={null}>
+            <InfiniteNewsFeed />
+          </Suspense>
+        </ErrorBoundary>
 
         <Suspense fallback={null}>
           <Newsletter />

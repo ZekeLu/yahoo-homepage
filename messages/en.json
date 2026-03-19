@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "news": "News",
+    "finance": "Finance",
+    "sports": "Sports",
+    "entertainment": "Entertainment",
+    "tech": "Tech",
+    "bookmarks": "Bookmarks"
+  },
+  "search": {
+    "placeholder": "Search the web...",
+    "label": "Search the web",
+    "button": "Search"
+  },
+  "footer": {
+    "about": "About",
+    "help": "Help",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "copyright": "\u00a9 2026 Yahoo. All rights reserved. (Demo site \u2014 not affiliated with Yahoo Inc.)"
+  },
+  "common": {
+    "topStories": "Top Stories",
+    "trending": "Trending",
+    "weather": "Weather",
+    "recentlyRead": "Recently Read",
+    "latestNews": "Latest News",
+    "loadMore": "Load more",
+    "showLess": "Show less",
+    "backToHome": "Back to Home",
+    "articleNotFound": "Article not found",
+    "noBookmarks": "No bookmarks yet",
+    "noBookmarksDesc": "Click the bookmark icon on any article to save it here.",
+    "browseArticles": "Browse articles",
+    "savedBookmarks": "Saved Bookmarks",
+    "endOfFeed": "You've reached the end of the feed.",
+    "minRead": "{minutes} min read",
+    "by": "By {author}",
+    "sponsored": "Sponsored",
+    "advertisement": "Advertisement"
+  },
+  "locale": {
+    "switchTo": "Switch language",
+    "en": "English",
+    "zh": "\u4e2d\u6587"
+  }
+}

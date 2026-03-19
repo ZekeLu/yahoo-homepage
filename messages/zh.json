@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "news": "\u65b0\u95fb",
+    "finance": "\u8d22\u7ecf",
+    "sports": "\u4f53\u80b2",
+    "entertainment": "\u5a31\u4e50",
+    "tech": "\u79d1\u6280",
+    "bookmarks": "\u4e66\u7b7e"
+  },
+  "search": {
+    "placeholder": "\u641c\u7d22\u7f51\u9875...",
+    "label": "\u641c\u7d22\u7f51\u9875",
+    "button": "\u641c\u7d22"
+  },
+  "footer": {
+    "about": "\u5173\u4e8e",
+    "help": "\u5e2e\u52a9",
+    "terms": "\u6761\u6b3e",
+    "privacy": "\u9690\u79c1",
+    "copyright": "\u00a9 2026 Yahoo. \u7248\u6743\u6240\u6709\u3002\uff08\u6f14\u793a\u7ad9\u70b9 \u2014 \u4e0e Yahoo Inc. \u65e0\u5173\uff09"
+  },
+  "common": {
+    "topStories": "\u5934\u6761\u65b0\u95fb",
+    "trending": "\u70ed\u95e8",
+    "weather": "\u5929\u6c14",
+    "recentlyRead": "\u6700\u8fd1\u9605\u8bfb",
+    "latestNews": "\u6700\u65b0\u65b0\u95fb",
+    "loadMore": "\u52a0\u8f7d\u66f4\u591a",
+    "showLess": "\u6536\u8d77",
+    "backToHome": "\u8fd4\u56de\u9996\u9875",
+    "articleNotFound": "\u6587\u7ae0\u672a\u627e\u5230",
+    "noBookmarks": "\u8fd8\u6ca1\u6709\u4e66\u7b7e",
+    "noBookmarksDesc": "\u70b9\u51fb\u4efb\u4f55\u6587\u7ae0\u4e0a\u7684\u4e66\u7b7e\u56fe\u6807\u5c06\u5176\u4fdd\u5b58\u5728\u8fd9\u91cc\u3002",
+    "browseArticles": "\u6d4f\u89c8\u6587\u7ae0",
+    "savedBookmarks": "\u5df2\u4fdd\u5b58\u7684\u4e66\u7b7e",
+    "endOfFeed": "\u60a8\u5df2\u7ecf\u5230\u8fbe\u4e86\u6700\u540e\u3002",
+    "minRead": "{minutes} \u5206\u949f\u9605\u8bfb",
+    "by": "\u4f5c\u8005\uff1a{author}",
+    "sponsored": "\u8d5e\u52a9",
+    "advertisement": "\u5e7f\u544a"
+  },
+  "locale": {
+    "switchTo": "\u5207\u6362\u8bed\u8a00",
+    "en": "English",
+    "zh": "\u4e2d\u6587"
+  }
+}

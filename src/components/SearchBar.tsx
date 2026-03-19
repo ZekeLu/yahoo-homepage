@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useI18n } from '@/components/I18nProvider';
 
 function generateSuggestions(query: string): string[] {
   const q = query.toLowerCase().trim();
@@ -15,6 +16,7 @@ function generateSuggestions(query: string): string[] {
 }
 
 export default function SearchBar({ initialQuery = '' }: { initialQuery?: string }) {
+  const { t } = useI18n();
   const [query, setQuery] = useState(initialQuery);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -82,12 +84,12 @@ export default function SearchBar({ initialQuery = '' }: { initialQuery?: string
           className="relative flex"
         >
           <label htmlFor="search-input" className="sr-only">
-            Search the web
+            {t('search.label')}
           </label>
           <input
             id="search-input"
             type="search"
-            placeholder="Search the web..."
+            placeholder={t('search.placeholder')}
             value={query}
             onChange={handleChange}
             onFocus={() => {
@@ -101,7 +103,7 @@ export default function SearchBar({ initialQuery = '' }: { initialQuery?: string
             className="rounded-r-full bg-yahoo-purple px-6 py-3 text-white font-semibold hover:bg-yahoo-purple-dark transition-colors"
             aria-label="Search"
           >
-            Search
+            {t('search.button')}
           </button>
 
           {showSuggestions && suggestions.length > 0 && (
