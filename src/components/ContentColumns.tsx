@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ShareButtons from "@/components/ShareButtons";
 import SkeletonCard from "@/components/SkeletonCard";
+import BookmarkButton from "@/components/BookmarkButton";
 import { allArticles as bundledArticles, type Article } from "@/lib/articles";
 
 interface FilterConfig {
@@ -151,7 +152,8 @@ export default function ContentColumns({ articles, loading: externalLoading }: C
                             <h3 className="text-sm font-semibold leading-snug text-gray-900 dark:text-white group-hover:underline">
                               {article.title}
                             </h3>
-                            <div className="flex-shrink-0">
+                            <div className="flex shrink-0 items-center gap-1">
+                              <BookmarkButton article={article} />
                               <ShareButtons title={article.title} slug={article.slug} />
                             </div>
                           </div>

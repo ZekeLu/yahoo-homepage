@@ -1,12 +1,15 @@
 'use client';
 
 import { useParams } from 'next/navigation';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { type Article } from '@/lib/articles';
 import { useCmsArticles } from '@/hooks/useCmsData';
+import BookmarkButton from '@/components/BookmarkButton';
+import { useReadingHistory } from '@/hooks/useReadingHistory';
 
 function calculateReadingTime(body: string[]): number {
   const wordCount = body.join(' ').split(/\s+/).length;
@@ -17,6 +20,20 @@ export default function ArticleContent() {
   const params = useParams();
   const slug = typeof params.slug === 'string' ? params.slug : '';
   const { articles, loading } = useCmsArticles();
+  const { addToHistory } = useReadingHistory();
+  const article = loading ? undefined : articles.find((a: Article) => a.slug === slug);
+
+  // Track reading history (must be before any early returns per rules of hooks)
+  useEffect(() => {
+    if (article) {
+      addToHistory({
+        slug: article.slug,
+        title: article.title,
+        category: article.category,
+        imageUrl: article.imageUrl,
+      });
+    }
+  }, [article, addToHistory]);
 
   if (loading) {
     return (
@@ -39,8 +56,6 @@ export default function ArticleContent() {
       </div>
     );
   }
-
-  const article = articles.find((a: Article) => a.slug === slug);
 
   if (!article) {
     return (
@@ -100,8 +115,9 @@ export default function ArticleContent() {
             {article.title}
           </h1>
 
-          {/* Author + date + reading time */}
+          {/* Bookmark + Author + date + reading time */}
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
+            <BookmarkButton article={article} size="md" />
             <span>By {article.author}</span>
             <span>&middot;</span>
             <time>{article.date}</time>

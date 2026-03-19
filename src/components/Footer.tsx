@@ -1,13 +1,18 @@
+'use client';
+
 import Link from 'next/link';
+import { useI18n } from '@/components/I18nProvider';
 
 const footerLinks = [
-  { label: "About", href: "/about" },
-  { label: "Help", href: "/help" },
-  { label: "Terms", href: "/terms" },
-  { label: "Privacy", href: "/privacy" },
+  { labelKey: "footer.about", href: "/about" },
+  { labelKey: "footer.help", href: "/help" },
+  { labelKey: "footer.terms", href: "/terms" },
+  { labelKey: "footer.privacy", href: "/privacy" },
 ];
 
 export default function Footer() {
+  const { t } = useI18n();
+
   return (
     <footer role="contentinfo" className="mt-8 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -17,19 +22,19 @@ export default function Footer() {
             role="list"
           >
             {footerLinks.map((link) => (
-              <li key={link.label}>
+              <li key={link.labelKey}>
                 <Link
                   href={link.href}
                   className="text-sm text-gray-500 dark:text-gray-400 hover:text-yahoo-purple transition-colors"
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
         <p className="mt-4 text-center text-xs text-gray-400">
-          © 2026 Yahoo. All rights reserved. (Demo site — not affiliated with Yahoo Inc.)
+          {t('footer.copyright')}
         </p>
       </div>
     </footer>
