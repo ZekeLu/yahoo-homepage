@@ -76,10 +76,25 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// Default fallback so components work even without I18nProvider (e.g. in tests)
+const defaultI18n: I18nContextType = {
+  locale: 'en',
+  setLocale: () => {},
+  t: (key: string, params?: Record<string, string | number>): string => {
+    let value = getNestedValue(messages.en, key);
+    if (value === undefined) return key;
+    if (params) {
+      Object.entries(params).forEach(([paramKey, paramValue]) => {
+        value = value!.replace(`{${paramKey}}`, String(paramValue));
+      });
+    }
+    return value;
+  },
+};
+
 export function useI18n(): I18nContextType {
   const ctx = useContext(I18nContext);
-  if (!ctx) throw new Error('useI18n must be used within I18nProvider');
-  return ctx;
+  return ctx ?? defaultI18n;
 }
 
 export type { Locale };
